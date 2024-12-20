@@ -38,11 +38,18 @@ ThemeData getApplicationTheme() {
         borderRadius: BorderRadius.circular(10),
       ),
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xCC96614D),
-      iconTheme: IconThemeData(
-        color: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: const Color(0xFFFCDDC9),
+      iconTheme: const IconThemeData(
+        color: Color(0xFF96614D),
       ),
+      titleTextStyle: const TextStyle(
+        color: Color(0xFF66AEA6),
+        fontSize: 24,
+        fontFamily: "Montserrat Bold",
+      ),
+      elevation: 4.0,
+      shadowColor: Colors.black.withOpacity(0.1),
     ),
   );
 }
