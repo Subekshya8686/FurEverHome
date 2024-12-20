@@ -27,7 +27,7 @@ class PetProfileCardView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isTablet = screenWidth > 600;
 
-    double fontSize = isTablet ? 20 : 14;
+    double fontSize = isTablet ? 18 : 14;
 
     return Card(
       margin: const EdgeInsets.all(14.0),
