@@ -22,7 +22,8 @@ class _LoginViewState extends State<LoginView> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const DashboardView(), // Replace with your DashboardView
+          builder: (context) =>
+              const DashboardView(),
         ),
       );
     } else {
@@ -42,7 +43,6 @@ class _LoginViewState extends State<LoginView> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +65,16 @@ class _LoginViewState extends State<LoginView> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   style: const TextStyle(
-                    fontFamily: 'WorkSansSemiBold',
                     fontSize: 16.0,
                     color: Color(0xFF96614D),
                   ),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    border: InputBorder.none,
-                    prefixIcon: const Icon(
+                  decoration: const InputDecoration(
+                    // enabledBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(10)),
+                    // focusedBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(10)),
+                    // border: InputBorder.none,
+                    prefixIcon: Icon(
                       Icons.email,
                       color: Color(0xCC96614D),
                       size: 22.0,
@@ -88,16 +87,15 @@ class _LoginViewState extends State<LoginView> {
                   controller: _passwordController,
                   obscureText: true,
                   style: const TextStyle(
-                    fontFamily: 'WorkSansSemiBold',
                     fontSize: 16.0,
                     color: Color(0xFF96614D),
                   ),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    prefixIcon: const Icon(
+                  decoration: const InputDecoration(
+                    // enabledBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(10)),
+                    // focusedBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(10)),
+                    prefixIcon: Icon(
                       Icons.lock,
                       size: 22.0,
                       color: Color(0xCC96614D),
@@ -122,17 +120,17 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF66AEA6)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.symmetric(vertical: 15)),
-                    ),
+                    // style: ButtonStyle(
+                    //   backgroundColor: WidgetStateProperty.all<Color>(
+                    //       const Color(0xFF66AEA6)),
+                    //   shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    //     RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(30),
+                    //     ),
+                    //   ),
+                    //   padding: WidgetStateProperty.all<EdgeInsets>(
+                    //       const EdgeInsets.symmetric(vertical: 15)),
+                    // ),
                     onPressed: _handleLogin,
                     child: const Text(
                       "Log In",
@@ -153,12 +151,12 @@ class _LoginViewState extends State<LoginView> {
                   width: double.infinity,
                   child: OutlinedButton(
                     style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      padding: MaterialStateProperty.all<EdgeInsets>(
+                      padding: WidgetStateProperty.all<EdgeInsets>(
                         const EdgeInsets.symmetric(vertical: 15),
                       ),
                     ),
@@ -171,8 +169,7 @@ class _LoginViewState extends State<LoginView> {
                     },
                     child: const Text(
                       "Sign Up",
-                      style: TextStyle(
-                          fontSize: 20, color: Color(0xFF66AEA6)),
+                      style: TextStyle(fontSize: 20, color: Color(0xFF66AEA6)),
                     ),
                   ),
                 ),
