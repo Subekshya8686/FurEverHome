@@ -75,13 +75,30 @@ class _HomeScreenState extends State<HomeScreen> {
       'gender': 'female',
       'age': '3 years old',
       'type': 'Dog',
-    }, 
+    },
     {
       'name': 'Oliver',
       'description': 'A cute cat',
       'image': 'cat1.png',
       'gender': 'male',
       'age': '2 years old',
+      'type': 'Cat',
+    },
+    {
+      'name': 'Buddy',
+      'description':
+          'A friendly dog. Loves to play fetch. The ball is his favorite toy. Enemey of cats.',
+      'image': 'dog1.png',
+      'gender': 'male',
+      'age': '2 years old',
+      'type': 'Dog',
+    },
+    {
+      'name': 'Kitty',
+      'description': 'A cute cat',
+      'image': 'dog2.png',
+      'gender': 'female',
+      'age': '1 year old',
       'type': 'Cat',
     },
   ];
