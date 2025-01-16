@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furever_home/view/pet_profile_card_view.dart';
+import 'package:furever_home/features/home/presentation/widget/pet_profile_card_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData getApplicationTheme() {
+  // Set the system UI overlay style for the status bar
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarIconBrightness: Brightness.dark, // Black icons in status bar
+  ));
+
   return ThemeData(
     fontFamily: "Montserrat Bold",
     primaryColor: const Color(0xCC96614D),
-    scaffoldBackgroundColor: Colors.grey[200],
+    scaffoldBackgroundColor: Color(0xFFFFF4EE),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(
