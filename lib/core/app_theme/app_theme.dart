@@ -4,13 +4,14 @@ import 'package:flutter/services.dart';
 ThemeData getApplicationTheme() {
   // Set the system UI overlay style for the status bar
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarIconBrightness: Brightness.dark, // Black icons in status bar
+    statusBarIconBrightness: Brightness.dark,
   ));
 
   return ThemeData(
     fontFamily: "Montserrat Bold",
     primaryColor: const Color(0xCC96614D),
-    scaffoldBackgroundColor: Color(0xFFFFF4EE),
+    // scaffoldBackgroundColor: Color(0xFFFFF4EE),
+    scaffoldBackgroundColor: Colors.grey[200],
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(
@@ -46,16 +47,20 @@ ThemeData getApplicationTheme() {
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: const Color(0xFFFCDDC9),
+      // backgroundColor: const Color(0xFFFCDDC9),
       iconTheme: const IconThemeData(
-        color: Color(0xFF96614D),
+        color: Color(0xCC7A4F3A),
+        // color: Color(0xFF96614D),
       ),
-      titleTextStyle: const TextStyle(
-        color: Color(0xFF66AEA6),
+      titleTextStyle: TextStyle(
+        // color: Color(0xFF66AEA6),
+        // color: Color(0xCC7A4F3A),
+        color: Colors.black,
         fontSize: 24,
         fontFamily: "Montserrat Bold",
       ),
       elevation: 4.0,
-      shadowColor: Colors.black.withOpacity(0.1),
+      shadowColor: Colors.black.withAlpha(26),
     ),
   );
 }
