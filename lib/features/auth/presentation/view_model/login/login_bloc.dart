@@ -1,12 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:furever_home/app/di/di.dart';
 import 'package:furever_home/core/common/snackbar/my_snackbar.dart';
 import 'package:furever_home/features/auth/domain/use_case/login_usecase.dart';
 import 'package:furever_home/features/auth/presentation/view_model/signup/register_bloc.dart';
-import 'package:furever_home/features/batch/presentation/view_model/batch_bloc.dart';
-import 'package:furever_home/features/course/presentation/view_model/bloc/course_bloc.dart';
 import 'package:furever_home/features/home/presentation/view/home_view.dart';
 import 'package:furever_home/features/home/presentation/view_model/home_cubit.dart';
 
@@ -32,8 +29,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         MaterialPageRoute(
             builder: (context) => MultiBlocProvider(
                   providers: [
-                    BlocProvider.value(value: getIt<CourseBloc>()),
-                    BlocProvider.value(value: getIt<BatchBloc>()),
                     BlocProvider.value(value: _registerBloc),
                   ],
                   child: event.destination,

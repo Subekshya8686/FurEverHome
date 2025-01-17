@@ -17,6 +17,8 @@ class _SignUpViewState extends State<SignUpView> {
   final _lnameController = TextEditingController(text: 'kayastha');
   final _phoneController = TextEditingController(text: '123456789');
   final _usernameController = TextEditingController(text: 'subekshya');
+  final _emailController = TextEditingController(text: 'abc@gmail.com');
+  final _dateOfBirthController = TextEditingController(text: '');
   final _passwordController = TextEditingController(text: 'password123');
 
   @override
@@ -128,29 +130,67 @@ class _SignUpViewState extends State<SignUpView> {
                     }),
                   ),
                   const SizedBox(height: 20),
-                  // TextFormField(
-                  //   keyboardType: TextInputType.emailAddress,
-                  //   style: const TextStyle(
-                  //     fontFamily: 'WorkSansSemiBold',
-                  //     fontSize: 16.0,
-                  //     color: Colors.black,
-                  //   ),
-                  //   decoration: InputDecoration(
-                  //     enabledBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //     ),
-                  //     prefixIcon: const Icon(
-                  //       Icons.email,
-                  //       color: Color(0xCC96614D),
-                  //       size: 22.0,
-                  //     ),
-                  //     labelText: 'Email Address',
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    style: const TextStyle(
+                      fontFamily: 'WorkSansSemiBold',
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Color(0xCC96614D),
+                        size: 22.0,
+                      ),
+                      labelText: 'Email Address',
+                    ),
+                    validator: ((value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    }),
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _dateOfBirthController,
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(
+                      fontFamily: 'WorkSansSemiBold',
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.calendar_today,
+                        color: Color(0xCC96614D),
+                        size: 22.0,
+                      ),
+                      labelText: 'Date of Birth',
+                      hintText: 'YYYY-MM-DD',
+                    ),
+                    validator: ((value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your date of birth';
+                      }
+                      return null;
+                    }),
+                  ),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _usernameController,
                     keyboardType: TextInputType.text,
@@ -167,7 +207,7 @@ class _SignUpViewState extends State<SignUpView> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       prefixIcon: const Icon(
-                        Icons.calendar_today,
+                        Icons.person,
                         color: Color(0xCC96614D),
                         size: 22.0,
                       ),
@@ -261,6 +301,8 @@ class _SignUpViewState extends State<SignUpView> {
                                 RegisterStudent(
                                   fname: _fnameController.text,
                                   lname: _lnameController.text,
+                                  email: _emailController.text,
+                                  dateOfBirth: _dateOfBirthController.text,
                                   password: _passwordController.text,
                                   username: _usernameController.text,
                                   context: context,

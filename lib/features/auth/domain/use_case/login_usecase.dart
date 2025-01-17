@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:furever_home/app/usecase/usecase.dart';
 import 'package:furever_home/core/error/failure.dart';
-import 'package:furever_home/features/auth/domain/repository/student_repository.dart';
+import 'package:furever_home/features/auth/domain/repository/auth_repository.dart';
 
 class LoginParams extends Equatable {
   final String username;

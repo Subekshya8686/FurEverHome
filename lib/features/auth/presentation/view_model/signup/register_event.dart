@@ -14,6 +14,8 @@ class RegisterStudent extends RegisterEvent {
   final String fname;
   final String lname;
   final String? image;
+  final String email;
+  final String dateOfBirth;
 
   // final BatchEntity batch;
   // final List<CourseEntity> courses;
@@ -24,15 +26,23 @@ class RegisterStudent extends RegisterEvent {
     required this.context,
     required this.fname,
     required this.lname,
-    // required this.batch,
-    // required this.courses,
+    required this.email,
+    required this.dateOfBirth,
     required this.password,
     required this.username,
     this.image,
   });
 
   @override
-  List<Object> get props => [fname, lname, username, password, context];
+  List<Object> get props => [
+        fname,
+        lname,
+        username,
+        password,
+        context,
+        dateOfBirth,
+        email,
+      ];
 }
 
 class NavigateToHomeScreenEvent extends RegisterEvent {
