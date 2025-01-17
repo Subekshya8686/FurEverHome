@@ -10,7 +10,6 @@ void main() async {
   await HiveService().init();
 
   runApp(
-    // const MyApp(),
     const App(),
   );
 }
