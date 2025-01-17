@@ -13,7 +13,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Home'),
+        // foregroundColor: Color(0xCC96614D),
         centerTitle: true,
         actions: [
           IconButton(
@@ -26,18 +28,18 @@ class HomeView extends StatelessWidget {
                 color: Colors.red,
               );
 
-              //   context.read<HomeCubit>().logout();
+              context.read<HomeCubit>().logout(context);
             },
           ),
-          Switch(
-            value: _isDarkTheme,
-            onChanged: (value) {
-              // Change theme
-              // setState(() {
-              //   _isDarkTheme = value;
-              // });
-            },
-          ),
+          // Switch(
+          //   value: _isDarkTheme,
+          //   onChanged: (value) {
+          //     // Change theme
+          //     // setState(() {
+          //     //   _isDarkTheme = value;
+          //     // });
+          //   },
+          // ),
         ],
       ),
       // body: _views.elementAt(_selectedIndex),
@@ -52,14 +54,6 @@ class HomeView extends StatelessWidget {
                 icon: Icon(Icons.dashboard),
                 label: 'Dashboard',
               ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.book),
-              //   label: 'Course',
-              // ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.group),
-              //   label: 'Batch',
-              // ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),
                 label: 'Account',
