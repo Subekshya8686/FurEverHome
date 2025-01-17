@@ -1,23 +1,23 @@
 import 'dart:io';
 
 import 'package:furever_home/core/network/hive_service.dart';
-import 'package:furever_home/features/auth/data/data_source/student_data_source.dart';
-import 'package:furever_home/features/auth/data/model/student_hive_model.dart';
-import 'package:furever_home/features/auth/domain/entity/student_entity.dart';
+import 'package:furever_home/features/auth/data/data_source/auth_data_source.dart';
+import 'package:furever_home/features/auth/data/model/auth_hive_model.dart';
+import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
 
-class StudentLocalDatasource implements IAuthDataSource {
+class AuthLocalDatasource implements IAuthDataSource {
   final HiveService _hiveService;
 
-  StudentLocalDatasource({required HiveService hiveService})
+  AuthLocalDatasource({required HiveService hiveService})
       : _hiveService = hiveService;
 
   // StudentLocalDatasource(this._hiveService);
 
   // register student
   @override
-  Future<void> addStudent(StudentEntity studentEntity) async {
+  Future<void> addStudent(AuthEntity authEntity) async {
     try {
-      final studentHiveModel = AuthHiveModel.fromEntity(studentEntity);
+      final studentHiveModel = AuthHiveModel.fromEntity(authEntity);
       await _hiveService.addAuth(studentHiveModel);
     } catch (e) {
       throw Exception(e);
@@ -34,7 +34,7 @@ class StudentLocalDatasource implements IAuthDataSource {
   }
 
   @override
-  Future<List<StudentEntity>> getAllStudents() {
+  Future<List<AuthEntity>> getAllStudents() {
     try {
       return _hiveService.getAllAuth().then((value) {
         return value.map((e) => e.toEntity()).toList();
@@ -45,14 +45,14 @@ class StudentLocalDatasource implements IAuthDataSource {
   }
 
   @override
-  Future<StudentEntity> getCurrentUser() {
-    return Future.value(StudentEntity(
+  Future<AuthEntity> getCurrentUser() {
+    return Future.value(AuthEntity(
       id: '1',
       fname: "",
       lname: "",
+      dateOfBirth: "",
+      email: "",
       image: null,
-      // batch: BatchEntity(batchName: ""),
-      // courses: [],
       username: "",
       password: "",
     ));

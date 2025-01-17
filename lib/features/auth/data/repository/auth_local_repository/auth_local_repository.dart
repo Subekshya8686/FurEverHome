@@ -2,21 +2,20 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:furever_home/core/error/failure.dart';
-import 'package:furever_home/features/auth/data/data_source/local_datasource/student_local_datasource.dart';
-import 'package:furever_home/features/auth/domain/entity/student_entity.dart';
-import 'package:furever_home/features/auth/domain/repository/student_repository.dart';
+import 'package:furever_home/features/auth/data/data_source/local_datasource/auth_local_datasource.dart';
+import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
+import 'package:furever_home/features/auth/domain/repository/auth_repository.dart';
 
-class StudentLocalRepository implements IAuthRepository {
-  final StudentLocalDatasource _studentLocalDatasource;
+class AuthLocalRepository implements IAuthRepository {
+  final AuthLocalDatasource _authLocalDatasource;
 
-  StudentLocalRepository(
-      {required StudentLocalDatasource studentLocalDataSource})
-      : _studentLocalDatasource = studentLocalDataSource;
+  AuthLocalRepository({required AuthLocalDatasource authLocalDataSource})
+      : _authLocalDatasource = authLocalDataSource;
 
   @override
-  Future<Either<Failure, void>> addStudent(StudentEntity studentEntity) {
+  Future<Either<Failure, void>> addStudent(AuthEntity authEntity) {
     try {
-      _studentLocalDatasource.addStudent(studentEntity);
+      _authLocalDatasource.addStudent(authEntity);
       return Future.value(Right(null));
     } catch (e) {
       return Future.value(Left(LocalDatabaseFailure(message: e.toString())));
@@ -26,7 +25,7 @@ class StudentLocalRepository implements IAuthRepository {
   @override
   Future<Either<Failure, void>> deleteStudent(String d) async {
     try {
-      await _studentLocalDatasource.deleteStudent(d);
+      await _authLocalDatasource.deleteStudent(d);
       return Right(null);
     } catch (e) {
       return Left(
@@ -36,9 +35,9 @@ class StudentLocalRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, List<StudentEntity>>> getAllStudents() async {
+  Future<Either<Failure, List<AuthEntity>>> getAllStudents() async {
     try {
-      final students = await _studentLocalDatasource.getAllStudents();
+      final students = await _authLocalDatasource.getAllStudents();
       return Right(students);
     } catch (e) {
       return Left(
@@ -48,9 +47,9 @@ class StudentLocalRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, StudentEntity>> getCurrentUser() async {
+  Future<Either<Failure, AuthEntity>> getCurrentUser() async {
     try {
-      final currentUser = await _studentLocalDatasource.getCurrentUser();
+      final currentUser = await _authLocalDatasource.getCurrentUser();
       return Right(currentUser);
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
@@ -61,8 +60,7 @@ class StudentLocalRepository implements IAuthRepository {
   Future<Either<Failure, String>> loginStudent(
       String username, String password) async {
     try {
-      final token =
-          await _studentLocalDatasource.loginStudent(username, password);
+      final token = await _authLocalDatasource.loginStudent(username, password);
       return Right(token);
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));

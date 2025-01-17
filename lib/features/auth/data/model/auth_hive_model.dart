@@ -1,13 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:furever_home/features/auth/domain/entity/student_entity.dart';
-import 'package:furever_home/features/batch/data/model/batch_hive_model.dart';
-import 'package:furever_home/features/course/data/model/course_hive_model.dart';
+import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../app/constants/hive_table_constant.dart';
 
-part 'student_hive_model.g.dart';
+part 'auth_hive_model.g.dart';
 
 @HiveType(typeId: HiveTableConstant.authTableId)
 class AuthHiveModel extends Equatable {
@@ -19,14 +17,13 @@ class AuthHiveModel extends Equatable {
   final String lname;
   @HiveField(3)
   final String? image;
-
-  // @HiveField(4)
-  // final BatchHiveModel batch;
-  // @HiveField(6)
-  // final List<CourseHiveModel> courses;
   @HiveField(4)
-  final String username;
+  final String dateOfBirth;
   @HiveField(5)
+  final String email;
+  @HiveField(6)
+  final String username;
+  @HiveField(7)
   final String password;
 
   AuthHiveModel({
@@ -34,8 +31,8 @@ class AuthHiveModel extends Equatable {
     required this.fname,
     required this.lname,
     this.image,
-    // required this.batch,
-    // required this.courses,
+    required this.dateOfBirth,
+    required this.email,
     required this.username,
     required this.password,
   }) : studentId = studentId ?? Uuid().v4();
@@ -45,31 +42,31 @@ class AuthHiveModel extends Equatable {
         fname = "",
         lname = "",
         image = "",
-        // batch = const BatchHiveModel.initial(),
-        // courses = const [],
+        dateOfBirth = "",
+        email = "",
         username = "",
         password = "";
 
-  factory AuthHiveModel.fromEntity(StudentEntity entity) {
+  factory AuthHiveModel.fromEntity(AuthEntity entity) {
     return AuthHiveModel(
       studentId: entity.id,
       fname: entity.fname,
       lname: entity.lname,
-      // batch: BatchHiveModel.fromEntity(entity.batch),
-      // courses: CourseHiveModel.fromEntityList(entity.courses),
+      dateOfBirth: entity.dateOfBirth,
+      email: entity.email,
       username: entity.username,
       password: entity.password,
     );
   }
 
-  StudentEntity toEntity() {
-    return StudentEntity(
+  AuthEntity toEntity() {
+    return AuthEntity(
       id: studentId,
       fname: fname,
       lname: lname,
       image: image,
-      // batch: batch.toEntity(),
-      // courses: CourseHiveModel.toEntityList(courses),
+      dateOfBirth: dateOfBirth,
+      email: email,
       username: username,
       password: password,
     );
@@ -82,8 +79,8 @@ class AuthHiveModel extends Equatable {
         fname,
         lname,
         image,
-        // batch,
-        // courses,
+        dateOfBirth,
+        email,
         username,
         password,
       ];

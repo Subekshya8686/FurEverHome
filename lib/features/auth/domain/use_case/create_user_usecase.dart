@@ -2,14 +2,17 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:furever_home/app/usecase/usecase.dart';
 import 'package:furever_home/core/error/failure.dart';
-import 'package:furever_home/features/auth/domain/entity/student_entity.dart';
-import 'package:furever_home/features/auth/domain/repository/student_repository.dart';
+import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
+import 'package:furever_home/features/auth/domain/repository/auth_repository.dart';
 
 class CreateStudentParams extends Equatable {
   final String fname;
   final String lname;
   final String username;
   final String password;
+  final String dateOfBirth;
+  final String email;
+
   // final BatchEntity batch;
   // final List<CourseEntity> courses;
 
@@ -18,12 +21,14 @@ class CreateStudentParams extends Equatable {
     required this.lname,
     required this.username,
     required this.password,
-    // required this.batch,
+    required this.dateOfBirth,
+    required this.email,
     // required this.courses,
   });
 
   @override
-  List<Object?> get props => [fname, lname, username, password];
+  List<Object?> get props =>
+      [fname, lname, email, dateOfBirth, username, password];
 }
 
 class CreateStudentUsecase
@@ -36,12 +41,13 @@ class CreateStudentUsecase
   Future<Either<Failure, void>> call(CreateStudentParams params) async {
     try {
       // Create a StudentEntity object from the params
-      final student = StudentEntity(
+      final student = AuthEntity(
         fname: params.fname,
         lname: params.lname,
         username: params.username,
         password: params.password,
-        // batch: params.batch,
+        dateOfBirth: params.dateOfBirth,
+        email: params.email,
         // courses: params.courses,
       );
 
