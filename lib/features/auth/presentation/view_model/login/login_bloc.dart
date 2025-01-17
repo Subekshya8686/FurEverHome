@@ -49,6 +49,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           ),
         ),
       );
+
+      showMySnackBar(
+        context: event.context,
+        message: 'Welcome Back',
+        color: Colors.teal,
+        showAtTop: true,
+      );
     });
 
     on<LoginStudentEvent>((event, emit) async {

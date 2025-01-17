@@ -5,7 +5,7 @@ import 'package:furever_home/core/error/failure.dart';
 import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
 
 abstract interface class IAuthRepository {
-  Future<Either<Failure, void>> addStudent(AuthEntity studentEntity);
+  Future<Either<Failure, void>> addStudent(AuthEntity authEntity);
 
   Future<Either<Failure, List<AuthEntity>>> getAllStudents();
 

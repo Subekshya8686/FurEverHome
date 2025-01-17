@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furever_home/app/di/di.dart';
 import 'package:furever_home/core/common/snackbar/my_snackbar.dart';
 import 'package:furever_home/features/auth/presentation/view/sign_in_view.dart';
+import 'package:furever_home/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:furever_home/features/auth/presentation/view_model/signup/register_bloc.dart';
 
 class SignUpView extends StatefulWidget {
@@ -16,9 +18,11 @@ class _SignUpViewState extends State<SignUpView> {
   final _fnameController = TextEditingController(text: 'subekshya');
   final _lnameController = TextEditingController(text: 'kayastha');
   final _phoneController = TextEditingController(text: '123456789');
+
+  // final _emailController = TextEditingController(text: 'abc@gmail.com');
+  // final _dateOfBirthController = TextEditingController(text: '2025-01-01');
+
   final _usernameController = TextEditingController(text: 'subekshya');
-  final _emailController = TextEditingController(text: 'abc@gmail.com');
-  final _dateOfBirthController = TextEditingController(text: '');
   final _passwordController = TextEditingController(text: 'password123');
 
   @override
@@ -129,67 +133,67 @@ class _SignUpViewState extends State<SignUpView> {
                       return null;
                     }),
                   ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(
-                      fontFamily: 'WorkSansSemiBold',
-                      fontSize: 16.0,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.email,
-                        color: Color(0xCC96614D),
-                        size: 22.0,
-                      ),
-                      labelText: 'Email Address',
-                    ),
-                    validator: ((value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      return null;
-                    }),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _dateOfBirthController,
-                    keyboardType: TextInputType.text,
-                    style: const TextStyle(
-                      fontFamily: 'WorkSansSemiBold',
-                      fontSize: 16.0,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.calendar_today,
-                        color: Color(0xCC96614D),
-                        size: 22.0,
-                      ),
-                      labelText: 'Date of Birth',
-                      hintText: 'YYYY-MM-DD',
-                    ),
-                    validator: ((value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your date of birth';
-                      }
-                      return null;
-                    }),
-                  ),
+                  // const SizedBox(height: 20),
+                  // TextFormField(
+                  //   controller: _emailController,
+                  //   keyboardType: TextInputType.emailAddress,
+                  //   style: const TextStyle(
+                  //     fontFamily: 'WorkSansSemiBold',
+                  //     fontSize: 16.0,
+                  //     color: Colors.black,
+                  //   ),
+                  //   decoration: InputDecoration(
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(20),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(20),
+                  //     ),
+                  //     prefixIcon: const Icon(
+                  //       Icons.email,
+                  //       color: Color(0xCC96614D),
+                  //       size: 22.0,
+                  //     ),
+                  //     labelText: 'Email Address',
+                  //   ),
+                  //   validator: ((value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter your email';
+                  //     }
+                  //     return null;
+                  //   }),
+                  // ),
+                  // const SizedBox(height: 20),
+                  // TextFormField(
+                  //   controller: _dateOfBirthController,
+                  //   keyboardType: TextInputType.datetime,
+                  //   style: const TextStyle(
+                  //     fontFamily: 'WorkSansSemiBold',
+                  //     fontSize: 16.0,
+                  //     color: Colors.black,
+                  //   ),
+                  //   decoration: InputDecoration(
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(20),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(20),
+                  //     ),
+                  //     prefixIcon: const Icon(
+                  //       Icons.calendar_today,
+                  //       color: Color(0xCC96614D),
+                  //       size: 22.0,
+                  //     ),
+                  //     labelText: 'Date of Birth',
+                  //     hintText: 'YYYY-MM-DD',
+                  //   ),
+                  //   validator: ((value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter your date of birth';
+                  //     }
+                  //     return null;
+                  //   }),
+                  // ),
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: _usernameController,
@@ -301,8 +305,8 @@ class _SignUpViewState extends State<SignUpView> {
                                 RegisterStudent(
                                   fname: _fnameController.text,
                                   lname: _lnameController.text,
-                                  email: _emailController.text,
-                                  dateOfBirth: _dateOfBirthController.text,
+                                  // email: _emailController.text,
+                                  // dateOfBirth: _dateOfBirthController.text,
                                   password: _passwordController.text,
                                   username: _usernameController.text,
                                   context: context,
@@ -355,7 +359,13 @@ class _SignUpViewState extends State<SignUpView> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginView()),
+                          // MaterialPageRoute(builder: (context) => LoginView()),
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                              value: getIt<LoginBloc>(),
+                              child: LoginView(),
+                            ),
+                          ),
                         );
                       },
                       child: const Text(

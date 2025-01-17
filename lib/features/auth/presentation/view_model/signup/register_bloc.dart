@@ -17,19 +17,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     required CreateStudentUsecase createStudentUsecase,
   })  : _createStudentUsecase = createStudentUsecase,
         super(RegisterState.initial()) {
-    on<LoadCoursesAndBatches>(_onRegisterEvent);
+    // on<LoadCoursesAndBatches>(_onRegisterEvent);
     on<RegisterStudent>(_onRegisterStudent);
     on<NavigateToHomeScreenEvent>(_onNavigateToHomeScreen);
-    add(LoadCoursesAndBatches());
+    // add(LoadCoursesAndBatches());
   }
 
-  void _onRegisterEvent(
-    LoadCoursesAndBatches event,
-    Emitter<RegisterState> emit,
-  ) {
-    emit(state.copyWith(isLoading: true));
-    emit(state.copyWith(isLoading: false, isSuccess: true));
-  }
+  // void _onRegisterEvent(
+  //   LoadCoursesAndBatches event,
+  //   Emitter<RegisterState> emit,
+  // ) {
+  //   emit(state.copyWith(isLoading: true));
+  //   emit(state.copyWith(isLoading: false, isSuccess: true));
+  // }
 
   Future<void> _onRegisterStudent(
     RegisterStudent event,
@@ -40,11 +40,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final result = await _createStudentUsecase.call(CreateStudentParams(
       fname: event.fname,
       lname: event.lname,
-      email: event.email,
-      dateOfBirth: event.dateOfBirth,
+      // email: event.email,
+      // dateOfBirth: event.dateOfBirth,
       username: event.username,
       password: event.password,
     ));
+
+    print(result);
 
     result.fold(
       (l) => emit(state.copyWith(isLoading: false, isSuccess: false)),
@@ -52,16 +54,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         emit(state.copyWith(isLoading: false, isSuccess: true));
         showMySnackBar(
             message: "Registration Successful", context: event.context);
+        print(result);
 
-        // Navigator.pushReplacement(
-        //   event.context,
-        //   MaterialPageRoute(
-        //     builder: (context) => BlocProvider.value(
-        //       value: getIt<LoginBloc>(),
-        //       child: LoginView(),
-        //     ),
-        //   ),
-        // );
         Future.delayed(const Duration(seconds: 2), () async {
           if (event.context.mounted) {
             Navigator.pushReplacement(

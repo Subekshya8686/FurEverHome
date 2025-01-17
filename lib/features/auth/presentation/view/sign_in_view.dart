@@ -27,7 +27,7 @@ class LoginView extends StatelessWidget {
                     BlocBuilder<LoginBloc, LoginState>(
                       builder: (context, state) {
                         return Text(
-                          'Login',
+                          'Log In',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -141,6 +141,13 @@ class LoginView extends StatelessWidget {
                           ),
                           padding: WidgetStateProperty.all<EdgeInsets>(
                             const EdgeInsets.symmetric(vertical: 15),
+                          ),
+                          side: WidgetStateProperty.all<BorderSide>(
+                            const BorderSide(
+                              // color: Color(0xCC7A4F3A), // Custom border color
+                              color: Color(0xFF66AEA6), // Custom border color
+                              width: 1.0, // Adjust the width as needed
+                            ),
                           ),
                         ),
                         onPressed: () {

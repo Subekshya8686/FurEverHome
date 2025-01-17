@@ -14,8 +14,10 @@ class RegisterStudent extends RegisterEvent {
   final String fname;
   final String lname;
   final String? image;
-  final String email;
-  final String dateOfBirth;
+
+  // final String email;
+
+  // final String dateOfBirth;
 
   // final BatchEntity batch;
   // final List<CourseEntity> courses;
@@ -26,8 +28,8 @@ class RegisterStudent extends RegisterEvent {
     required this.context,
     required this.fname,
     required this.lname,
-    required this.email,
-    required this.dateOfBirth,
+    // required this.email,
+    // required this.dateOfBirth,
     required this.password,
     required this.username,
     this.image,
@@ -40,8 +42,8 @@ class RegisterStudent extends RegisterEvent {
         username,
         password,
         context,
-        dateOfBirth,
-        email,
+        // dateOfBirth,
+        // email,
       ];
 }
 
