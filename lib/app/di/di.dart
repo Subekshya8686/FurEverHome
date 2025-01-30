@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
+import 'package:furever_home/core/network/api_service.dart';
 import 'package:furever_home/core/network/hive_service.dart';
 import 'package:furever_home/features/auth/data/data_source/local_datasource/auth_local_datasource.dart';
+import 'package:furever_home/features/auth/data/data_source/remote_data_source/auth_remote_datasource.dart';
+import 'package:furever_home/features/auth/data/repository/auth_remote_repository/auth_remote_repository.dart';
 import 'package:furever_home/features/auth/domain/use_case/create_user_usecase.dart';
 import 'package:furever_home/features/auth/domain/use_case/login_usecase.dart';
 import 'package:furever_home/features/auth/presentation/view_model/login/login_bloc.dart';
@@ -14,6 +18,8 @@ final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
   await _initHiveService();
+  await _initApiService();
+
   await _initHomeDependencies();
   await _initRegisterDependencies();
   await _initLoginDependencies();
@@ -24,6 +30,12 @@ _initHiveService() {
   getIt.registerLazySingleton<HiveService>(() => HiveService());
 }
 
+_initApiService() {
+  getIt.registerLazySingleton<Dio>(
+    () => ApiService(Dio()).dio,
+  );
+}
+
 _initHomeDependencies() async {
   getIt.registerFactory<HomeCubit>(
     () => HomeCubit(),
@@ -31,17 +43,32 @@ _initHomeDependencies() async {
 }
 
 _initRegisterDependencies() async {
-  // data source
+  // data source ===============================================
   getIt.registerLazySingleton<AuthLocalDatasource>(
       () => AuthLocalDatasource(hiveService: getIt<HiveService>()));
 
-// repository
+  getIt.registerLazySingleton<AuthRemoteDatasource>(
+    () => AuthRemoteDatasource(getIt<Dio>()),
+  );
+
+// repository ===============================================
   getIt.registerLazySingleton<AuthLocalRepository>(() =>
       AuthLocalRepository(authLocalDataSource: getIt<AuthLocalDatasource>()));
 
-// Use Cases
+  getIt.registerLazySingleton<AuthRemoteRepository>(
+    () => AuthRemoteRepository(getIt<AuthRemoteDatasource>()),
+  );
+
+// Use Cases ===============================================
+//   getIt.registerLazySingleton<CreateStudentUsecase>(
+//       () => CreateStudentUsecase(getIt<AuthLocalRepository>()));
+
   getIt.registerLazySingleton<CreateStudentUsecase>(
-      () => CreateStudentUsecase(getIt<AuthLocalRepository>()));
+    () => CreateStudentUsecase(
+      getIt<AuthRemoteRepository>(),
+    ),
+  );
+
   // getIt.registerLazySingleton<GetAllStudentsUsecase>(
   //     () => GetAllStudentsUsecase(getIt<StudentLocalRepository>()));
   //
@@ -57,9 +84,14 @@ _initRegisterDependencies() async {
 }
 
 _initLoginDependencies() async {
+  // getIt.registerLazySingleton<LoginUseCase>(
+  //   () => LoginUseCase(
+  //     getIt<AuthLocalRepository>(),
+  //   ),
+  // );
   getIt.registerLazySingleton<LoginUseCase>(
     () => LoginUseCase(
-      getIt<AuthLocalRepository>(),
+      getIt<AuthRemoteRepository>(),
     ),
   );
 
