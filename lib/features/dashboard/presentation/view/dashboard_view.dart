@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:furever_home/features/profile/presentation/view/profile_view.dart';
 import 'package:furever_home/view/chat_screen.dart';
 import 'package:furever_home/view/home_screen.dart';
-import 'package:furever_home/view/profile_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
