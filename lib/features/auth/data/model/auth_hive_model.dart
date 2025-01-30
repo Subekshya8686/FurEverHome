@@ -23,7 +23,7 @@ class AuthHiveModel extends Equatable {
   // @HiveField(4)
   // final String? email;
   @HiveField(4)
-  final String username;
+  final String email;
   @HiveField(5)
   final String password;
 
@@ -34,7 +34,7 @@ class AuthHiveModel extends Equatable {
     this.image,
     // required this.dateOfBirth,
     // this.email,
-    required this.username,
+    required this.email,
     required this.password,
   }) : studentId = studentId ?? Uuid().v4();
 
@@ -45,7 +45,7 @@ class AuthHiveModel extends Equatable {
         image = "",
         // dateOfBirth = "",
         // email = "",
-        username = "",
+        email = "",
         password = "";
 
   factory AuthHiveModel.fromEntity(AuthEntity entity) {
@@ -54,8 +54,8 @@ class AuthHiveModel extends Equatable {
       fname: entity.fname,
       lname: entity.lname,
       // dateOfBirth: entity.dateOfBirth,
-      // email: entity.email,
-      username: entity.username,
+      email: entity.email,
+      // username: entity.username,
       password: entity.password,
     );
   }
@@ -68,7 +68,7 @@ class AuthHiveModel extends Equatable {
       image: image,
       // dateOfBirth: dateOfBirth,
       // email: email,
-      username: username,
+      email: email,
       password: password,
     );
   }
@@ -81,8 +81,8 @@ class AuthHiveModel extends Equatable {
         lname,
         image,
         // dateOfBirth,
-        // email,
-        username,
+        email,
+        // username,
         password,
       ];
 }

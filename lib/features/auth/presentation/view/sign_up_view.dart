@@ -19,10 +19,11 @@ class _SignUpViewState extends State<SignUpView> {
   final _lnameController = TextEditingController(text: 'kayastha');
   final _phoneController = TextEditingController(text: '123456789');
 
-  // final _emailController = TextEditingController(text: 'abc@gmail.com');
+  final _emailController = TextEditingController(text: 'abc@gmail.com');
+
   // final _dateOfBirthController = TextEditingController(text: '2025-01-01');
 
-  final _usernameController = TextEditingController(text: 'subekshya');
+  // final _usernameController = TextEditingController(text: 'subekshya');
   final _passwordController = TextEditingController(text: 'password123');
 
   @override
@@ -196,7 +197,7 @@ class _SignUpViewState extends State<SignUpView> {
                   // ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: _usernameController,
+                    controller: _emailController,
                     keyboardType: TextInputType.text,
                     style: const TextStyle(
                       fontFamily: 'WorkSansSemiBold',
@@ -215,12 +216,12 @@ class _SignUpViewState extends State<SignUpView> {
                         color: Color(0xCC96614D),
                         size: 22.0,
                       ),
-                      labelText: 'Username',
+                      labelText: 'Email',
                       // hintText: 'YYYY-MM-DD',
                     ),
                     validator: ((value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter username';
+                        return 'Please enter email';
                       }
                       return null;
                     }),
@@ -308,7 +309,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   // email: _emailController.text,
                                   // dateOfBirth: _dateOfBirthController.text,
                                   password: _passwordController.text,
-                                  username: _usernameController.text,
+                                  email: _emailController.text,
                                   context: context,
                                 ),
                               );

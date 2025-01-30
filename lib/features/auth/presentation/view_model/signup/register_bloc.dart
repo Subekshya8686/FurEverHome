@@ -40,9 +40,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final result = await _createStudentUsecase.call(CreateStudentParams(
       fname: event.fname,
       lname: event.lname,
-      // email: event.email,
+      email: event.email,
       // dateOfBirth: event.dateOfBirth,
-      username: event.username,
+      // username: event.username,
       password: event.password,
     ));
 

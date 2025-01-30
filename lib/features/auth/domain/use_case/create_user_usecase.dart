@@ -8,11 +8,12 @@ import 'package:furever_home/features/auth/domain/repository/auth_repository.dar
 class CreateStudentParams extends Equatable {
   final String fname;
   final String lname;
-  final String username;
+
+  // final String username;
+  final String email;
   final String password;
 
   // final String dateOfBirth;
-  // final String email;
 
   // final BatchEntity batch;
   // final List<CourseEntity> courses;
@@ -20,15 +21,15 @@ class CreateStudentParams extends Equatable {
   const CreateStudentParams({
     required this.fname,
     required this.lname,
-    required this.username,
+    // required this.username,
     required this.password,
     // required this.dateOfBirth,
-    // required this.email,
+    required this.email,
     // required this.courses,
   });
 
   @override
-  List<Object?> get props => [fname, lname, username, password];
+  List<Object?> get props => [fname, lname, email, password];
 }
 
 class CreateStudentUsecase
@@ -44,7 +45,7 @@ class CreateStudentUsecase
       final student = AuthEntity(
         fname: params.fname,
         lname: params.lname,
-        username: params.username,
+        email: params.email,
         password: params.password,
         // dateOfBirth: params.dateOfBirth,
         // email: params.email,
