@@ -12,6 +12,8 @@ class CreateStudentParams extends Equatable {
   // final String username;
   final String email;
   final String password;
+  final String? image;
+  final String? phone;
 
   // final String dateOfBirth;
 
@@ -24,7 +26,9 @@ class CreateStudentParams extends Equatable {
     // required this.username,
     required this.password,
     // required this.dateOfBirth,
+    required this.phone,
     required this.email,
+    this.image,
     // required this.courses,
   });
 
@@ -46,7 +50,9 @@ class CreateStudentUsecase
         fname: params.fname,
         lname: params.lname,
         email: params.email,
+        phone: params.phone,
         password: params.password,
+        image: params.image,
         // dateOfBirth: params.dateOfBirth,
         // email: params.email,
         // courses: params.courses,

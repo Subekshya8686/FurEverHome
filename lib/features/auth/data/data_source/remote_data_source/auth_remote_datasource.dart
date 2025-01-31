@@ -18,7 +18,7 @@ class AuthRemoteDatasource implements IAuthDataSource {
         ApiEndpoints.register,
         data: {
           "name": fullName,
-          // "lname": auth.lname,
+          "phone": auth.phone,
           "image": auth.image,
           "email": auth.email,
           "password": auth.password,
@@ -84,7 +84,7 @@ class AuthRemoteDatasource implements IAuthDataSource {
 
       FormData formData = FormData.fromMap(
         {
-          'profilePicture': await MultipartFile.fromFile(
+          'image': await MultipartFile.fromFile(
             file.path,
             filename: fileName,
           ),
