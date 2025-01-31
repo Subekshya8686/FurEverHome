@@ -6,6 +6,7 @@ import 'package:furever_home/features/auth/data/data_source/remote_data_source/a
 import 'package:furever_home/features/auth/data/repository/auth_remote_repository/auth_remote_repository.dart';
 import 'package:furever_home/features/auth/domain/use_case/create_user_usecase.dart';
 import 'package:furever_home/features/auth/domain/use_case/login_usecase.dart';
+import 'package:furever_home/features/auth/domain/use_case/upload_image_usecase.dart';
 import 'package:furever_home/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:furever_home/features/auth/presentation/view_model/signup/register_bloc.dart';
 import 'package:furever_home/features/home/presentation/view_model/home_cubit.dart';
@@ -69,6 +70,12 @@ _initRegisterDependencies() async {
     ),
   );
 
+  getIt.registerLazySingleton<UploadImageUsecase>(
+    () => UploadImageUsecase(
+      getIt<AuthRemoteRepository>(),
+    ),
+  );
+
   // getIt.registerLazySingleton<GetAllStudentsUsecase>(
   //     () => GetAllStudentsUsecase(getIt<StudentLocalRepository>()));
   //
@@ -79,6 +86,7 @@ _initRegisterDependencies() async {
   getIt.registerFactory<RegisterBloc>(
     () => RegisterBloc(
       createStudentUsecase: getIt(),
+      uploadImageUsecase: getIt(),
     ),
   );
 }

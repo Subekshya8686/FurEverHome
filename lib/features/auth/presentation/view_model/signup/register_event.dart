@@ -14,8 +14,8 @@ class RegisterStudent extends RegisterEvent {
   final String fname;
   final String lname;
   final String? image;
-
   final String email;
+  final String? phone;
 
   // final String dateOfBirth;
 
@@ -32,6 +32,7 @@ class RegisterStudent extends RegisterEvent {
     // required this.dateOfBirth,
     required this.password,
     // required this.username,
+    required this.phone,
     this.image,
   });
 
@@ -58,4 +59,12 @@ class NavigateToHomeScreenEvent extends RegisterEvent {
 
   @override
   List<Object> get props => [context, destination];
+}
+
+class LoadImage extends RegisterEvent {
+  final File file;
+
+  const LoadImage({
+    required this.file,
+  });
 }
