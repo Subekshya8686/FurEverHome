@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:furever_home/features/dashboard/presentation/view/home_screen.dart';
 
 class HomeState extends Equatable {
   final int selectedIndex;
@@ -15,9 +16,10 @@ class HomeState extends Equatable {
     return HomeState(
       selectedIndex: 0,
       views: [
-        const Center(
-          child: Text('Dashboard'),
-        ),
+        // const Center(
+        //   child: Text('Dashboard'),
+        // ),
+        const HomeScreen(),
         // const Center(
         //   child: Text('Course'),
         // ),

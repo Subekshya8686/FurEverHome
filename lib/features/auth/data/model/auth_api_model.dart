@@ -11,6 +11,7 @@ class AuthApiModel extends Equatable {
   final String fname;
   final String lname;
   final String? image;
+  final String? phone;
   final String email;
   final String? password;
 
@@ -21,6 +22,7 @@ class AuthApiModel extends Equatable {
     required this.image,
     required this.email,
     required this.password,
+    required this.phone,
   });
 
   // auto generates the json values (From Json)
@@ -38,6 +40,7 @@ class AuthApiModel extends Equatable {
       fname: fname,
       lname: lname,
       image: image,
+      phone: phone,
       email: email,
       password: password ?? '',
     );
@@ -49,6 +52,7 @@ class AuthApiModel extends Equatable {
       fname: entity.fname,
       lname: entity.lname,
       image: entity.image,
+      phone: entity.phone,
       email: entity.email,
       password: entity.password,
     );
@@ -59,6 +63,7 @@ class AuthApiModel extends Equatable {
         fname,
         lname,
         image,
+        phone,
         email,
         password,
       ];

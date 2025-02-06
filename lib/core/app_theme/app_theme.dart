@@ -12,6 +12,7 @@ ThemeData getApplicationTheme() {
     primaryColor: const Color(0xCC96614D),
     // scaffoldBackgroundColor: Color(0xFFFFF4EE),
     scaffoldBackgroundColor: Colors.grey[200],
+    // scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(
@@ -38,15 +39,23 @@ ThemeData getApplicationTheme() {
           color: Colors.red,
         ),
       ),
+      prefixIconColor: const Color(0xCC96614D),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: Color(0xFFB34A2E), // Border turns this color when focused
+          width: 2, // Slightly thicker for emphasis
+        ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: Colors.grey, // Grey color when not focused
+        ),
       ),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color(0xFFFCDDC9),
+      backgroundColor: const Color(0xFFFFCCAA),
       // backgroundColor: const Color(0xFFFCDDC9),
       iconTheme: const IconThemeData(
         color: Color(0xCC7A4F3A),
