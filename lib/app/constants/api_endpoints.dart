@@ -11,4 +11,7 @@ class ApiEndpoints {
   static const String register = "user";
   static const String uploadImage = "user/upload";
   static const String imageUrl = "http://10.0.2.2:3000/uploads/";
+
+  static const String getAllPets = "pet/getAllPets";
+  static const String getPetByID = "pet/get/";
 }
