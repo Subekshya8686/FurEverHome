@@ -1,0 +1,46 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'pet_api_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+PetApiModel _$PetApiModelFromJson(Map<String, dynamic> json) => PetApiModel(
+      id: json['_id'] as String,
+      name: json['name'] as String,
+      type: json['type'] as String,
+      breed: json['breed'] as String,
+      age: (json['age'] as num).toInt(),
+      weight: (json['weight'] as num).toDouble(),
+      vaccinated: json['vaccinated'] as bool,
+      specialNeeds: json['specialNeeds'] as bool,
+      healthDetails: json['healthDetails'] as String,
+      height: (json['height'] as num).toDouble(),
+      furType: json['furType'] as String,
+      color: json['color'] as String,
+      eyeColor: json['eyeColor'] as String,
+      dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
+      dateAdded: DateTime.parse(json['dateAdded'] as String),
+      photo: json['photo'] as String?,
+    );
+
+Map<String, dynamic> _$PetApiModelToJson(PetApiModel instance) =>
+    <String, dynamic>{
+      '_id': instance.id,
+      'name': instance.name,
+      'type': instance.type,
+      'breed': instance.breed,
+      'age': instance.age,
+      'weight': instance.weight,
+      'vaccinated': instance.vaccinated,
+      'specialNeeds': instance.specialNeeds,
+      'healthDetails': instance.healthDetails,
+      'height': instance.height,
+      'furType': instance.furType,
+      'color': instance.color,
+      'eyeColor': instance.eyeColor,
+      'dateOfBirth': instance.dateOfBirth.toIso8601String(),
+      'dateAdded': instance.dateAdded.toIso8601String(),
+      'photo': instance.photo,
+    };
