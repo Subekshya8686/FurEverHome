@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:furever_home/app/constants/api_endpoints.dart';
 import 'package:furever_home/core/error/failure.dart';
 import 'package:furever_home/features/dashboard/data/data_source/pet_datasource.dart';
-import 'package:furever_home/features/dashboard/data/dto/get_all_pets_dto.dart';
 import 'package:furever_home/features/dashboard/data/model/pet_api_model.dart';
 import 'package:furever_home/features/dashboard/domain/entity/pet_entity.dart'; // Import PetEntity
 
@@ -17,17 +16,25 @@ class PetRemoteDatasource implements IPetDataSource {
   Future<Either<Failure, List<PetEntity>>> getAllPets() async {
     try {
       Response response = await _dio.get(ApiEndpoints.getAllPets);
+      print("response $response");
       if (response.statusCode == 200) {
-        // Parse the response into GetAllPetsDTO
-        GetAllPetsDTO petAddDTO = GetAllPetsDTO.fromJson(response.data);
+        // Check if response.data contains the pets key
+        if (response.data != null && response.data['pets'] != null) {
+          // Parse the response into GetAllPetsDTO
+          List<dynamic> petsData = response.data['pets'];
 
-        // Convert PetApiModel to PetEntity and return the list
-        List<PetEntity> pets = petAddDTO.data
-            .map((petApiModel) =>
-                petApiModel.toEntity()) // Convert each PetApiModel to PetEntity
-            .toList();
+          // Convert PetApiModel to PetEntity and return the list
+          List<PetEntity> pets = petsData
+              .map((petApiModelJson) => PetApiModel.fromJson(petApiModelJson)
+                  .toEntity()) // Convert each PetApiModel to PetEntity
+              .toList();
 
-        return Right(pets);
+          print("pets $pets");
+
+          return Right(pets);
+        } else {
+          return Left(ApiFailure(message: 'No pets found in the response.'));
+        }
       } else {
         return Left(ApiFailure(
             message: 'Failed to fetch pets: ${response.statusMessage}'));

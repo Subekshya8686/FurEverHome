@@ -16,6 +16,13 @@ class PetRemoteRepository implements IPetRepository {
       // Get the result from the data source
       final result = await _petRemoteDatasource.getAllPets();
 
+      print("result $result");
+
+      // Check if result is null, return empty list instead
+      if (result == null) {
+        return Right([]); // Return an empty list if null
+      }
+
       // Return the result directly if successful, or return the failure if not
       return result.fold(
         (failure) => Left(failure), // If there was an error in data source

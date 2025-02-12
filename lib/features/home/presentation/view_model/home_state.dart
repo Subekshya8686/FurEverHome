@@ -1,6 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:furever_home/features/dashboard/presentation/view/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furever_home/app/di/di.dart';
+import 'package:furever_home/features/dashboard/presentation/view/pet_home_screen.dart';
+import 'package:furever_home/features/dashboard/presentation/view_model/pet_bloc.dart';
+import 'package:furever_home/features/profile/presentation/view/profile_view.dart';
+import 'package:furever_home/features/search/presentation/view/search_page.dart';
 
 class HomeState extends Equatable {
   final int selectedIndex;
@@ -16,20 +21,19 @@ class HomeState extends Equatable {
     return HomeState(
       selectedIndex: 0,
       views: [
-        // const Center(
-        //   child: Text('Dashboard'),
-        // ),
-        const HomeScreen(),
-        // const Center(
-        //   child: Text('Course'),
-        // ),
-        // BlocProvider(
-        //   create: (context) => getIt<BatchBloc>(),
-        //   child: BatchView(),
-        // ),
-        const Center(
-          child: Text('Account'),
+        BlocProvider(
+          create: (context) => getIt<PetBloc>(),
+          child: const PetHomeScreen(),
         ),
+        BlocProvider(
+          create: (context) => getIt<PetBloc>(),
+          child: SearchPage(),
+        ),
+        // BlocProvider(
+        //   create: (context) => getIt<FosterFormBloc>(),
+        //   child: FosterFormPage(),
+        // ),
+        const ProfileView(),
       ],
     );
   }

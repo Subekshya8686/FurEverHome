@@ -14,63 +14,75 @@ class PetModel extends HiveObject {
   final String name;
 
   @HiveField(2)
-  final String type;
+  final String description;
 
   @HiveField(3)
-  final String breed;
+  final String type;
 
   @HiveField(4)
-  final int age;
+  final String breed;
 
   @HiveField(5)
-  final double weight;
+  final int age;
 
   @HiveField(6)
-  final bool vaccinated;
+  final double weight;
 
   @HiveField(7)
-  final bool specialNeeds;
+  final bool vaccinated;
 
   @HiveField(8)
-  final String healthDetails;
+  final bool specialNeeds;
 
   @HiveField(9)
-  final double height;
+  final String? healthDetails;
 
   @HiveField(10)
-  final String furType;
+  final double? height;
 
   @HiveField(11)
-  final String color;
+  final String? furType;
 
   @HiveField(12)
-  final String eyeColor;
+  final String? color;
 
   @HiveField(13)
-  final DateTime dateOfBirth;
+  final String? eyeColor;
 
   @HiveField(14)
-  final DateTime dateAdded;
+  final DateTime? dateOfBirth;
 
   @HiveField(15)
+  final DateTime? dateAdded;
+
+  @HiveField(16)
+  final String? adoptionStatus;
+
+  @HiveField(17)
+  final List<String>? bookmarkedBy;
+
+  @HiveField(18)
   final String? photo;
 
   PetModel({
     required this.id,
     required this.name,
+    required this.description,
     required this.type,
     required this.breed,
     required this.age,
     required this.weight,
     required this.vaccinated,
     required this.specialNeeds,
-    required this.healthDetails,
-    required this.height,
-    required this.furType,
-    required this.color,
-    required this.eyeColor,
-    required this.dateOfBirth,
-    required this.dateAdded,
+    this.healthDetails,
+    this.height,
+    this.furType,
+    this.color,
+    this.eyeColor,
+    this.dateOfBirth,
+    this.dateAdded,
+    this.adoptionStatus,
+    this.bookmarkedBy,
     this.photo,
   });
 
@@ -79,6 +91,7 @@ class PetModel extends HiveObject {
     return PetModel(
       id: entity.id,
       name: entity.name,
+      description: entity.description,
       type: entity.type,
       breed: entity.breed,
       age: entity.age,
@@ -92,6 +105,8 @@ class PetModel extends HiveObject {
       eyeColor: entity.eyeColor,
       dateOfBirth: entity.dateOfBirth,
       dateAdded: entity.dateAdded,
+      adoptionStatus: entity.adoptionStatus,
+      bookmarkedBy: entity.bookmarkedBy,
       photo: entity.photo,
     );
   }
@@ -101,6 +116,7 @@ class PetModel extends HiveObject {
     return PetEntity(
       id: id,
       name: name,
+      description: description,
       type: type,
       breed: breed,
       age: age,
@@ -114,6 +130,8 @@ class PetModel extends HiveObject {
       eyeColor: eyeColor,
       dateOfBirth: dateOfBirth,
       dateAdded: dateAdded,
+      adoptionStatus: adoptionStatus,
+      bookmarkedBy: bookmarkedBy,
       photo: photo,
     );
   }

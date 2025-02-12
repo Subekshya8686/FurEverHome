@@ -12,6 +12,7 @@ class GetAllPetsUseCase implements UsecaseWithoutParams<List<PetEntity>> {
   @override
   Future<Either<Failure, List<PetEntity>>> call() async {
     try {
+      print("success");
       return await repository.getAllPets();
     } on Failure catch (failure) {
       return Left(failure);
