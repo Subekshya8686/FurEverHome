@@ -18,13 +18,13 @@ ThemeData getApplicationTheme() {
         textStyle: const TextStyle(
           fontSize: 18,
           fontFamily: "Montserrat Bold",
-          color: Colors.white,
         ),
+        foregroundColor: Colors.white,
         backgroundColor: const Color(0xFF66AEA6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 15),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
