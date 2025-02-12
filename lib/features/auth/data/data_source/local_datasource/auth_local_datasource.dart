@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+import 'package:furever_home/core/error/failure.dart';
 import 'package:furever_home/core/network/hive_service.dart';
 import 'package:furever_home/features/auth/data/data_source/auth_data_source.dart';
 import 'package:furever_home/features/auth/data/model/auth_hive_model.dart';
@@ -71,6 +73,19 @@ class AuthLocalDatasource implements IAuthDataSource {
   @override
   Future<String> uploadProfilePicture(File file) {
     // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserById(String userId) {
+    // TODO: implement getUserById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, void>> updateStudentById(
+      String userId, AuthEntity auth) {
+    // TODO: implement updateStudentById
     throw UnimplementedError();
   }
 }

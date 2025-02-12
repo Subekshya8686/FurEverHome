@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:furever_home/app/constants/api_endpoints.dart';
+import 'package:furever_home/core/error/failure.dart';
 import 'package:furever_home/features/auth/data/data_source/auth_data_source.dart';
+import 'package:furever_home/features/auth/data/model/auth_api_model.dart';
 import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
 
 class AuthRemoteDatasource implements IAuthDataSource {
@@ -34,6 +37,71 @@ class AuthRemoteDatasource implements IAuthDataSource {
       throw Exception(e);
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserById(String userId) async {
+    try {
+      // Make the API request
+      Response response = await _dio.get('${ApiEndpoints.register}/$userId');
+      print("response: $response");
+      print(response.statusCode);
+      print(response.data);
+
+      // Check if the response status code is 200 (OK)
+      if (response.statusCode == 200) {
+        // If successful, convert the response data to an AuthEntity
+        AuthApiModel authApiModel = AuthApiModel.fromJson(response.data);
+        print(authApiModel);
+
+        // Convert to AuthEntity
+        AuthEntity authEntity = authApiModel.toEntity();
+        print("auth entity: $authEntity");
+
+        return Right(authEntity); // Return the entity wrapped in Right
+      } else {
+        // If the status code is not 200, return a failure
+        return Left(ApiFailure(
+            message:
+                'Failed to fetch user with ID $userId: ${response.statusMessage}'));
+      }
+    } on DioException catch (e) {
+      // Handle Dio-specific exceptions
+      return Left(ApiFailure(message: 'DioError: ${e.message}'));
+    } catch (e) {
+      // Handle any other errors
+      return Left(ApiFailure(message: 'Error: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateStudentById(
+      String userId, AuthEntity auth) async {
+    print("auth");
+    try {
+      String fullName = '${auth.fname} ${auth.lname}';
+      Response response = await _dio.put(
+        '${ApiEndpoints.update}/$userId',
+        data: {
+          "name": fullName,
+          "phone": auth.phone,
+          "image": auth.image,
+          "email": auth.email,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(null);
+      } else {
+        return Left(ApiFailure(
+            message:
+                'Failed to update user with ID $userId: ${response.statusMessage}'));
+      }
+    } on DioException catch (e) {
+      return Left(ApiFailure(message: 'DioError: ${e.message}'));
+    } catch (e) {
+      return Left(ApiFailure(message: 'Error: ${e.toString()}'));
     }
   }
 

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+import 'package:furever_home/core/error/failure.dart';
 import 'package:furever_home/features/auth/domain/entity/auth_entity.dart';
 
 abstract interface class IAuthDataSource {
@@ -14,4 +16,9 @@ abstract interface class IAuthDataSource {
   Future<AuthEntity> getCurrentUser();
 
   Future<String> uploadProfilePicture(File file);
+
+  Future<Either<Failure, AuthEntity>> getUserById(String userId);
+
+  Future<Either<Failure, void>> updateStudentById(
+      String userId, AuthEntity auth);
 }
