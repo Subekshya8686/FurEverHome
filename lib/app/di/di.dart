@@ -26,6 +26,7 @@ import 'package:furever_home/features/foster/data/repository/foster_remote_repos
 import 'package:furever_home/features/foster/domain/use_case/create_foster_usecase.dart';
 import 'package:furever_home/features/foster/presentation/view_model/foster_bloc.dart';
 import 'package:furever_home/features/home/presentation/view_model/home_cubit.dart';
+import 'package:furever_home/features/onboarding/presentation/view_model/onboarding_cubit.dart';
 import 'package:furever_home/features/profile/presentation/view_model/profile_bloc.dart';
 import 'package:furever_home/features/splash/presentation/view_model/splash_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -48,6 +49,7 @@ Future<void> initDependencies() async {
   await _initPetDependencies();
   await _initAdoptionDependencies();
   await _initFosterDependencies();
+  await _initOnboardingScreenDependencies();
 }
 
 Future<void> _initSharedPreferences() async {
@@ -246,8 +248,8 @@ _initSplashScreenDependencies() async {
   );
 }
 
-// _initOnboardingScreenDependencies() async {
-//   getIt.registerFactory<OnboardCubit>(
-//     () => OnboardCubit(getIt<LoginBloc>()),
-//   );
-// }
+_initOnboardingScreenDependencies() async {
+  getIt.registerFactory<OnboardCubit>(
+    () => OnboardCubit(getIt<LoginBloc>()),
+  );
+}

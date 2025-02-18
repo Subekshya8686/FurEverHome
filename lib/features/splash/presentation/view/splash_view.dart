@@ -44,14 +44,14 @@ class _SplashViewState extends State<SplashView> {
               ],
             ),
           ),
-          Positioned(
-            bottom: 10,
-            left: MediaQuery.of(context).size.width / 4,
-            child: const Text(
-              'Developed by: Subekshya Kayastha',
-              style: TextStyle(fontSize: 15),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 10,
+          //   left: MediaQuery.of(context).size.width / 4,
+          //   child: const Text(
+          //     'Developed by: Subekshya Kayastha',
+          //     style: TextStyle(fontSize: 15),
+          //   ),
+          // ),
         ],
       ),
     );
