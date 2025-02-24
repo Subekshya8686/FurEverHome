@@ -11,15 +11,15 @@ class SearchPage extends StatefulWidget {
 }
 
 class _PetSearchScreenState extends State<SearchPage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    context.read<PetBloc>().add(GetAllPetsEvent()); // Load pets on screen load
+    context.read<PetBloc>().add(GetAllPetsEvent());
 
-    // Listen for shake gesture using accelerometerEventStream
-    accelerometerEventStream().listen((AccelerometerEvent event) {
+    // Listen for shake gesture
+    accelerometerEventStream().listen((event) {
       if (_isShakeDetected(event)) {
         _clearSearch();
       }
@@ -27,10 +27,7 @@ class _PetSearchScreenState extends State<SearchPage> {
   }
 
   bool _isShakeDetected(AccelerometerEvent event) {
-    // You can adjust the threshold value based on how sensitive you want the shake detection to be
     const double shakeThreshold = 10.0;
-
-    // Check if the acceleration exceeds the threshold, indicating a shake
     return event.x.abs() > shakeThreshold ||
         event.y.abs() > shakeThreshold ||
         event.z.abs() > shakeThreshold;
@@ -38,58 +35,96 @@ class _PetSearchScreenState extends State<SearchPage> {
 
   void _clearSearch() {
     _searchController.clear();
-    context
-        .read<PetBloc>()
-        .add(SearchPetsEvent('')); // Clear search query in the PetBloc
+    context.read<PetBloc>().add(SearchPetsEvent(''));
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isTablet = screenWidth >= 600;
+
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: isTablet ? screenWidth * 0.08 : 16.0,
+          vertical: isTablet ? 20.0 : 8.0,
+        ),
+        child: Column(
+          children: [
+            TextField(
               controller: _searchController,
               onChanged: (query) {
                 context.read<PetBloc>().add(SearchPetsEvent(query));
               },
+              style: TextStyle(fontSize: isTablet ? 20 : 16),
               decoration: InputDecoration(
-                labelText: "Search for a pet ",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+                labelText: "Search for a pet",
+                labelStyle: TextStyle(fontSize: isTablet ? 18 : 14),
+                prefixIcon: Icon(Icons.search, size: isTablet ? 30 : 24),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(isTablet ? 16.0 : 8.0),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: isTablet ? 18.0 : 12.0,
+                  horizontal: isTablet ? 20.0 : 12.0,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: BlocBuilder<PetBloc, PetState>(
-              builder: (context, state) {
-                if (state is PetLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is PetErrorState) {
-                  return Center(child: Text("Error: ${state.message}"));
-                } else if (state is PetLoadedState) {
-                  return _buildPetList(state.pets);
-                }
-                return Center(child: Text("Start searching for pets!"));
-              },
+            const SizedBox(height: 16),
+            Expanded(
+              child: BlocBuilder<PetBloc, PetState>(
+                builder: (context, state) {
+                  if (state is PetLoadingState) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is PetErrorState) {
+                    return Center(
+                        child: Text(
+                      "Error: ${state.message}",
+                      style: TextStyle(fontSize: isTablet ? 18 : 14),
+                    ));
+                  } else if (state is PetLoadedState) {
+                    return _buildPetList(state.pets, isTablet);
+                  }
+                  return Center(
+                      child: Text(
+                    "Start searching for pets!",
+                    style: TextStyle(fontSize: isTablet ? 18 : 14),
+                  ));
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildPetList(List<PetEntity> pets) {
+  Widget _buildPetList(List<PetEntity> pets, bool isTablet) {
     if (pets.isEmpty) {
-      return Center(child: Text("No pets found."));
+      return Center(
+          child: Text(
+        "No pets found.",
+        style: TextStyle(fontSize: isTablet ? 18 : 14),
+      ));
     }
-    return ListView.builder(
-      itemCount: pets.length,
-      itemBuilder: (context, index) {
-        return PetCard(pet: pets[index]); // ✅ Using PetCard instead of ListTile
-      },
-    );
+    return isTablet
+        ? GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, // Two columns for tablets
+              childAspectRatio: 2.5,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+            ),
+            itemCount: pets.length,
+            itemBuilder: (context, index) {
+              return PetCard(pet: pets[index]);
+            },
+          )
+        : ListView.builder(
+            itemCount: pets.length,
+            itemBuilder: (context, index) {
+              return PetCard(pet: pets[index]);
+            },
+          );
   }
 }
