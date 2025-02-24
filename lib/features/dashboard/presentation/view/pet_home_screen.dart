@@ -21,6 +21,9 @@ class _PetHomeScreenState extends State<PetHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen width
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -35,13 +38,28 @@ class _PetHomeScreenState extends State<PetHomeScreen> {
                   return Center(child: Text('Error: ${state.message}'));
                 } else if (state is PetLoadedState) {
                   return Expanded(
-                    child: ListView.builder(
-                      itemCount: state.pets.length,
-                      itemBuilder: (context, index) {
-                        final pet = state.pets[index];
-                        return PetCard(pet: pet);
-                      },
-                    ),
+                    child: screenWidth > 600 // For tablet screens, use grid
+                        ? GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3, // Two columns on tablet
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              childAspectRatio: 2.5, // Adjust item aspect ratio
+                            ),
+                            itemCount: state.pets.length,
+                            itemBuilder: (context, index) {
+                              final pet = state.pets[index];
+                              return PetCard(pet: pet);
+                            },
+                          )
+                        : ListView.builder(
+                            itemCount: state.pets.length,
+                            itemBuilder: (context, index) {
+                              final pet = state.pets[index];
+                              return PetCard(pet: pet);
+                            },
+                          ),
                   );
                 } else {
                   return const Center(child: Text('No pets available'));
@@ -63,7 +81,6 @@ class PetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String imageUrl = 'http://10.0.2.2:5000/uploads/${pet.photo}';
-    // String imageUrl = 'http://192.168.1.5:5000/uploads/${pet.photo}';
 
     return GestureDetector(
       onTap: () {
@@ -131,17 +148,6 @@ class PetCard extends StatelessWidget {
                           color: Colors.grey,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      // Align(
-                      //   alignment: Alignment.centerRight,
-                      //   child: Text(
-                      //     'Read More',
-                      //     style: const TextStyle(
-                      //       fontSize: 14,
-                      //       color: Color(0xFF66AEA6),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
