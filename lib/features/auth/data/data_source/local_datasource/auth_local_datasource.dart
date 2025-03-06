@@ -51,9 +51,9 @@ class AuthLocalDatasource implements IAuthDataSource {
       fname: "",
       lname: "",
       // dateOfBirth: "",
-      // email: "",
       image: null,
-      username: "",
+      email: "",
+      // username: "",
       password: "",
     ));
   }

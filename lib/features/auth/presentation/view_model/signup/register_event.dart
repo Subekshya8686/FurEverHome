@@ -14,24 +14,25 @@ class RegisterStudent extends RegisterEvent {
   final String fname;
   final String lname;
   final String? image;
-
-  // final String email;
+  final String email;
+  final String? phone;
 
   // final String dateOfBirth;
 
   // final BatchEntity batch;
   // final List<CourseEntity> courses;
-  final String username;
+  // final String username;
   final String password;
 
   const RegisterStudent({
     required this.context,
     required this.fname,
     required this.lname,
-    // required this.email,
+    required this.email,
     // required this.dateOfBirth,
     required this.password,
-    required this.username,
+    // required this.username,
+    required this.phone,
     this.image,
   });
 
@@ -39,7 +40,7 @@ class RegisterStudent extends RegisterEvent {
   List<Object> get props => [
         fname,
         lname,
-        username,
+        email,
         password,
         context,
         // dateOfBirth,
@@ -58,4 +59,12 @@ class NavigateToHomeScreenEvent extends RegisterEvent {
 
   @override
   List<Object> get props => [context, destination];
+}
+
+class LoadImage extends RegisterEvent {
+  final File file;
+
+  const LoadImage({
+    required this.file,
+  });
 }

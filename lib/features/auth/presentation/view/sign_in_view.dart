@@ -8,7 +8,7 @@ class LoginView extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
 
@@ -38,8 +38,8 @@ class LoginView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      key: const ValueKey('username'),
-                      controller: _usernameController,
+                      key: const ValueKey('email'),
+                      controller: _emailController,
                       // keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(
                         fontSize: 16.0,
@@ -51,11 +51,11 @@ class LoginView extends StatelessWidget {
                           color: Color(0xCC96614D),
                           size: 22.0,
                         ),
-                        labelText: 'Username',
+                        labelText: 'Email',
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter username';
+                          return 'Please enter email address';
                         }
                         return null;
                       },
@@ -107,7 +107,7 @@ class LoginView extends StatelessWidget {
                             context.read<LoginBloc>().add(
                                   LoginStudentEvent(
                                     context: context,
-                                    username: _usernameController.text,
+                                    email: _emailController.text,
                                     password: _passwordController.text,
                                   ),
                                 );

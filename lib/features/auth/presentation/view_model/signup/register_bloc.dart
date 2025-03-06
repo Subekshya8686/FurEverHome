@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furever_home/app/di/di.dart';
 import 'package:furever_home/core/common/snackbar/my_snackbar.dart';
 import 'package:furever_home/features/auth/domain/use_case/create_user_usecase.dart';
+import 'package:furever_home/features/auth/domain/use_case/upload_image_usecase.dart';
 import 'package:furever_home/features/auth/presentation/view/sign_in_view.dart';
 import 'package:furever_home/features/auth/presentation/view_model/login/login_bloc.dart';
 
@@ -12,24 +15,36 @@ part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final CreateStudentUsecase _createStudentUsecase;
+  final UploadImageUsecase _uploadImageUsecase;
 
   RegisterBloc({
     required CreateStudentUsecase createStudentUsecase,
+    required UploadImageUsecase uploadImageUsecase,
   })  : _createStudentUsecase = createStudentUsecase,
+        _uploadImageUsecase = uploadImageUsecase,
         super(RegisterState.initial()) {
     // on<LoadCoursesAndBatches>(_onRegisterEvent);
     on<RegisterStudent>(_onRegisterStudent);
     on<NavigateToHomeScreenEvent>(_onNavigateToHomeScreen);
-    // add(LoadCoursesAndBatches());
+    on<LoadImage>(_onLoadImage);
   }
 
-  // void _onRegisterEvent(
-  //   LoadCoursesAndBatches event,
-  //   Emitter<RegisterState> emit,
-  // ) {
-  //   emit(state.copyWith(isLoading: true));
-  //   emit(state.copyWith(isLoading: false, isSuccess: true));
-  // }
+  void _onLoadImage(
+    LoadImage event,
+    Emitter<RegisterState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    final result = await _uploadImageUsecase.call(
+      UploadImageParams(file: event.file),
+    );
+
+    print("$result, Image");
+
+    result.fold((l) => emit(state.copyWith(isLoading: false, isSuccess: false)),
+        (r) {
+      emit(state.copyWith(isLoading: false, isSuccess: false, imageName: r));
+    });
+  }
 
   Future<void> _onRegisterStudent(
     RegisterStudent event,
@@ -40,10 +55,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final result = await _createStudentUsecase.call(CreateStudentParams(
       fname: event.fname,
       lname: event.lname,
-      // email: event.email,
+      email: event.email,
       // dateOfBirth: event.dateOfBirth,
-      username: event.username,
+      // username: event.username,
+      phone: event.phone,
       password: event.password,
+      image: state.imageName,
     ));
 
     print(result);

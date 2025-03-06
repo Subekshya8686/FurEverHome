@@ -61,7 +61,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginStudentEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true));
       final result = await _loginUseCase(
-        LoginParams(password: event.password, username: event.username),
+        LoginParams(password: event.password, email: event.email),
       );
 
       result.fold((failure) {

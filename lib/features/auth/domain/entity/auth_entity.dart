@@ -5,10 +5,7 @@ class AuthEntity extends Equatable {
   final String fname;
   final String lname;
   final String? image;
-
-  // final String dateOfBirth;
-  // final String email;
-  final String username;
+  final String email;
   final String password;
 
   const AuthEntity({
@@ -16,9 +13,7 @@ class AuthEntity extends Equatable {
     required this.fname,
     required this.lname,
     this.image,
-    // required this.dateOfBirth,
-    // required this.email,
-    required this.username,
+    required this.email,
     required this.password,
   });
 
@@ -29,9 +24,9 @@ class AuthEntity extends Equatable {
         fname,
         lname,
         // dateOfBirth,
-        // email,
+        email,
         image,
-        username,
+        // username,
         password,
       ];
 }

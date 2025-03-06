@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furever_home/app/di/di.dart';
@@ -5,6 +7,8 @@ import 'package:furever_home/core/common/snackbar/my_snackbar.dart';
 import 'package:furever_home/features/auth/presentation/view/sign_in_view.dart';
 import 'package:furever_home/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:furever_home/features/auth/presentation/view_model/signup/register_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -19,11 +23,43 @@ class _SignUpViewState extends State<SignUpView> {
   final _lnameController = TextEditingController(text: 'kayastha');
   final _phoneController = TextEditingController(text: '123456789');
 
-  // final _emailController = TextEditingController(text: 'abc@gmail.com');
+  final _emailController = TextEditingController(text: 'abc@gmail.com');
+
   // final _dateOfBirthController = TextEditingController(text: '2025-01-01');
 
-  final _usernameController = TextEditingController(text: 'subekshya');
+  // final _usernameController = TextEditingController(text: 'subekshya');
   final _passwordController = TextEditingController(text: 'password123');
+
+  checkCameraPermission() async {
+    if (await Permission.camera.request().isRestricted ||
+        await Permission.camera.request().isDenied) {
+      await Permission.camera.request();
+    }
+  }
+
+  File? _img;
+
+  Future _browseImage(ImageSource imageSource) async {
+    print(imageSource);
+    print("$_img,image");
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+          print("$image, IMAGE");
+          print(_img);
+          context.read<RegisterBloc>().add(
+                LoadImage(file: _img!),
+              );
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +75,98 @@ class _SignUpViewState extends State<SignUpView> {
                   const Text(
                     "Create New Account",
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF96614D)),
+                  ),
+                  const SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        backgroundColor: Colors.grey[300],
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(10),
+                          ),
+                        ),
+                        builder: (context) => Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  checkCameraPermission();
+                                  _browseImage(ImageSource.camera);
+                                  Navigator.pop(context);
+                                  // Upload image it is not null
+                                },
+                                // icon: const Icon(Icons.camera),
+                                // label: const Text('Camera'),
+                                icon: const Icon(Icons.camera,
+                                    size: 24, color: Colors.white),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xFFB34A2E),
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Rounded corners
+                                  ),
+                                ),
+                                label: const Text('Camera',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight:
+                                            FontWeight.bold)), // Text styling
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _browseImage(ImageSource.gallery);
+                                  Navigator.pop(context);
+                                },
+                                // icon: const Icon(Icons.image),
+                                // label: const Text('Gallery'),
+                                icon: const Icon(Icons.image,
+                                    size: 24, color: Colors.white),
+                                label: const Text('Gallery',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xFF66AEA6),
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Rounded corners
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: 150,
+                      width: 200,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: _img != null
+                            ? FileImage(_img!)
+                            : const AssetImage(
+                                    'assets/images/add_image_icon.png')
+                                as ImageProvider,
+                        // backgroundImage:
+                        //     const AssetImage('assets/images/profile.png')
+                        //         as ImageProvider,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -50,15 +175,9 @@ class _SignUpViewState extends State<SignUpView> {
                     style: const TextStyle(
                       fontFamily: 'WorkSansSemiBold',
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Color(0xFF96614D),
                     ),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
                       prefixIcon: const Icon(
                         Icons.person_2_outlined,
                         color: Color(0xCC96614D),
@@ -80,15 +199,9 @@ class _SignUpViewState extends State<SignUpView> {
                     style: const TextStyle(
                       fontFamily: 'WorkSansSemiBold',
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Color(0xFF96614D),
                     ),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
                       prefixIcon: const Icon(
                         Icons.person_2_outlined,
                         color: Color(0xCC96614D),
@@ -110,15 +223,9 @@ class _SignUpViewState extends State<SignUpView> {
                     style: const TextStyle(
                       fontFamily: 'WorkSansSemiBold',
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Color(0xFF96614D),
                     ),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
                       prefixIcon: const Icon(
                         Icons.call,
                         color: Color(0xCC96614D),
@@ -133,94 +240,27 @@ class _SignUpViewState extends State<SignUpView> {
                       return null;
                     }),
                   ),
-                  // const SizedBox(height: 20),
-                  // TextFormField(
-                  //   controller: _emailController,
-                  //   keyboardType: TextInputType.emailAddress,
-                  //   style: const TextStyle(
-                  //     fontFamily: 'WorkSansSemiBold',
-                  //     fontSize: 16.0,
-                  //     color: Colors.black,
-                  //   ),
-                  //   decoration: InputDecoration(
-                  //     enabledBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //     ),
-                  //     prefixIcon: const Icon(
-                  //       Icons.email,
-                  //       color: Color(0xCC96614D),
-                  //       size: 22.0,
-                  //     ),
-                  //     labelText: 'Email Address',
-                  //   ),
-                  //   validator: ((value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter your email';
-                  //     }
-                  //     return null;
-                  //   }),
-                  // ),
-                  // const SizedBox(height: 20),
-                  // TextFormField(
-                  //   controller: _dateOfBirthController,
-                  //   keyboardType: TextInputType.datetime,
-                  //   style: const TextStyle(
-                  //     fontFamily: 'WorkSansSemiBold',
-                  //     fontSize: 16.0,
-                  //     color: Colors.black,
-                  //   ),
-                  //   decoration: InputDecoration(
-                  //     enabledBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(20),
-                  //     ),
-                  //     prefixIcon: const Icon(
-                  //       Icons.calendar_today,
-                  //       color: Color(0xCC96614D),
-                  //       size: 22.0,
-                  //     ),
-                  //     labelText: 'Date of Birth',
-                  //     hintText: 'YYYY-MM-DD',
-                  //   ),
-                  //   validator: ((value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter your date of birth';
-                  //     }
-                  //     return null;
-                  //   }),
-                  // ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: _usernameController,
+                    controller: _emailController,
                     keyboardType: TextInputType.text,
                     style: const TextStyle(
                       fontFamily: 'WorkSansSemiBold',
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Color(0xFF96614D),
                     ),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
                       prefixIcon: const Icon(
                         Icons.person,
                         color: Color(0xCC96614D),
                         size: 22.0,
                       ),
-                      labelText: 'Username',
+                      labelText: 'Email',
                       // hintText: 'YYYY-MM-DD',
                     ),
                     validator: ((value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter username';
+                        return 'Please enter email';
                       }
                       return null;
                     }),
@@ -232,15 +272,9 @@ class _SignUpViewState extends State<SignUpView> {
                     style: const TextStyle(
                       fontFamily: 'WorkSansSemiBold',
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Color(0xFF96614D),
                     ),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
                       prefixIcon: const Icon(
                         Icons.lock,
                         size: 22.0,
@@ -301,14 +335,19 @@ class _SignUpViewState extends State<SignUpView> {
                       // },
                       onPressed: () {
                         if (_key.currentState!.validate()) {
+                          final registerState =
+                              context.read<RegisterBloc>().state;
+                          final imageName = registerState.imageName;
                           context.read<RegisterBloc>().add(
                                 RegisterStudent(
                                   fname: _fnameController.text,
                                   lname: _lnameController.text,
+                                  phone: _phoneController.text,
                                   // email: _emailController.text,
                                   // dateOfBirth: _dateOfBirthController.text,
                                   password: _passwordController.text,
-                                  username: _usernameController.text,
+                                  email: _emailController.text,
+                                  image: imageName,
                                   context: context,
                                 ),
                               );
