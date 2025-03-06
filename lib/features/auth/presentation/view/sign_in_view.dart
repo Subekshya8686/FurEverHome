@@ -93,7 +93,7 @@ class LoginView extends StatelessWidget {
                         },
                         child: Text(
                           "Forgot password?",
-                          style: TextStyle(color: Colors.grey.shade800),
+                          style: TextStyle(color: Colors.grey[500]),
                         ),
                       ),
                     ),

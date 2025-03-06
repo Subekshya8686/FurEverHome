@@ -1,4 +1,5 @@
 import 'package:furever_home/features/auth/data/model/auth_hive_model.dart';
+import 'package:furever_home/features/dashboard/data/model/pet_hive_model.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,33 +15,27 @@ class HiveService {
     // Hive.registerAdapter(BatchHiveModelAdapter());
     // Hive.registerAdapter(CourseHiveModelAdapter());
     Hive.registerAdapter(AuthHiveModelAdapter());
+    Hive.registerAdapter(PetModelAdapter());
   }
-
-// Student Queries
-  Future<void> addStudent() async {}
-
-  Future<void> deleteStudent() async {}
-
-  Future<void> getAllStudents() async {}
 
   // Auth Queries
   Future<void> addAuth(AuthHiveModel auth) async {
-    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.studentBox);
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.authBox);
     await box.put(auth.studentId, auth);
   }
 
   Future<void> deleteAuth(String id) async {
-    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.studentBox);
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.authBox);
     await box.delete(id);
   }
 
   Future<List<AuthHiveModel>> getAllAuth() async {
-    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.studentBox);
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.authBox);
     return box.values.toList();
   }
 
   Future<AuthHiveModel?> loginStudent(String email, String password) async {
-    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.studentBox);
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.authBox);
     var auth = box.values.firstWhere(
         (element) => element.email == email && element.password == password);
     box.close();
@@ -49,8 +44,29 @@ class HiveService {
   }
 
   Future<void> clearAll() async {
-    await Hive.deleteBoxFromDisk(HiveTableConstant.studentBox);
+    await Hive.deleteBoxFromDisk(HiveTableConstant.authBox);
   }
+
+  // ===========================
+  // PET QUERIES
+  // ===========================
+  Future<List<PetModel>> getAllPets() async {
+    var box = await Hive.openBox<PetModel>(HiveTableConstant.petBox);
+    return box.values.toList();
+  }
+
+  Future<PetModel?> getPetById(String id) async {
+    var box = await Hive.openBox<PetModel>(HiveTableConstant.petBox);
+    return box.get(id);
+  }
+
+  Future<void> clearAllPets() async {
+    await Hive.deleteBoxFromDisk(HiveTableConstant.petBox);
+  }
+
+  // ===========================
+  // CLOSE
+  // ===========================
 
   Future<void> close() async {
     await Hive.close();

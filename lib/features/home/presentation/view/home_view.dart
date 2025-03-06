@@ -14,7 +14,20 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Home'),
+        // title: const Text('Home'),
+        title: Row(
+          children: [
+            // Add your image here
+            Image.asset(
+              'assets/images/fureverHome_logo.png', // Path to your image asset
+              width: 60, // Adjust the width as needed
+              height: 45, // Adjust the height as needed
+            ),
+            const SizedBox(width: 10),
+            // Add some spacing between the image and text
+            const Text('Home'),
+          ],
+        ),
         // foregroundColor: Color(0xCC96614D),
         centerTitle: true,
         actions: [
@@ -64,9 +77,9 @@ class HomeView extends StatelessWidget {
             onTap: (index) {
               context.read<HomeCubit>().onTabTapped(index);
             },
-            backgroundColor: const Color(0xFFFCDDC9),
+            backgroundColor: const Color(0xFFFFCCAA),
             // selectedItemColor: const Color(0xFF66AEA6),
-            selectedItemColor: const Color(0xCC96614D),
+            selectedItemColor: const Color(0xFFB34A2E),
           );
         },
       ),
