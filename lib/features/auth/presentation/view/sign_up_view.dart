@@ -19,16 +19,16 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   final _key = GlobalKey<FormState>();
-  final _fnameController = TextEditingController(text: 'subekshya');
-  final _lnameController = TextEditingController(text: 'kayastha');
-  final _phoneController = TextEditingController(text: '123456789');
+  final _fnameController = TextEditingController(text: '');
+  final _lnameController = TextEditingController(text: '');
+  final _phoneController = TextEditingController(text: '');
 
-  final _emailController = TextEditingController(text: 'abc@gmail.com');
+  final _emailController = TextEditingController(text: '');
 
   // final _dateOfBirthController = TextEditingController(text: '2025-01-01');
 
   // final _usernameController = TextEditingController(text: 'subekshya');
-  final _passwordController = TextEditingController(text: 'password123');
+  final _passwordController = TextEditingController(text: '');
 
   checkCameraPermission() async {
     if (await Permission.camera.request().isRestricted ||
@@ -75,7 +75,7 @@ class _SignUpViewState extends State<SignUpView> {
                   const Text(
                     "Create New Account",
                     style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF96614D)),
                   ),
