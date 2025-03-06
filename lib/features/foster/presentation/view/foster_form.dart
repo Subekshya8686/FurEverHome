@@ -197,47 +197,53 @@ class _FosterFormPageState extends State<FosterFormPage> {
                     const SizedBox(height: 20),
                     state.isLoading
                         ? Center(child: CircularProgressIndicator())
-                        : ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState?.validate() ?? false) {
-                                context.read<FosterFormBloc>().add(
-                                      SubmitFormEvent(
-                                        applicantId: applicantId,
-                                        petId: petId,
-                                        applicantName:
-                                            _applicantNameController.text,
-                                        applicantEmail:
-                                            _applicantEmailController.text,
-                                        applicantPhone:
-                                            _applicantPhoneController.text,
-                                        districtOrCity:
-                                            _districtOrCityController.text,
-                                        homeAddress:
-                                            _homeAddressController.text,
-                                        householdMembers: int.parse(
-                                            _householdMembersController.text),
-                                        hasPets: true,
-                                        petDetails: _petDetailsController
-                                                .text.isNotEmpty
-                                            ? _petDetailsController.text
-                                            : null,
-                                        residenceType:
-                                            _residenceTypeController.text,
-                                        reasonForFostering:
-                                            _reasonForFosteringController.text,
-                                        experienceWithPets:
-                                            _experienceWithPetsController.text,
-                                        availabilityDuration:
-                                            _availabilityDurationController
-                                                .text,
-                                        abilityToHandleMedicalNeeds: true,
-                                        hasFencedYard: false,
-                                        agreementToTerms: agreementToTerms,
-                                      ),
-                                    );
-                              }
-                            },
-                            child: Text('Submit Form'),
+                        : SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  context.read<FosterFormBloc>().add(
+                                        SubmitFormEvent(
+                                          applicantId: applicantId,
+                                          petId: petId,
+                                          applicantName:
+                                              _applicantNameController.text,
+                                          applicantEmail:
+                                              _applicantEmailController.text,
+                                          applicantPhone:
+                                              _applicantPhoneController.text,
+                                          districtOrCity:
+                                              _districtOrCityController.text,
+                                          homeAddress:
+                                              _homeAddressController.text,
+                                          householdMembers: int.parse(
+                                              _householdMembersController.text),
+                                          hasPets: true,
+                                          petDetails: _petDetailsController
+                                                  .text.isNotEmpty
+                                              ? _petDetailsController.text
+                                              : null,
+                                          residenceType:
+                                              _residenceTypeController.text,
+                                          reasonForFostering:
+                                              _reasonForFosteringController
+                                                  .text,
+                                          experienceWithPets:
+                                              _experienceWithPetsController
+                                                  .text,
+                                          availabilityDuration:
+                                              _availabilityDurationController
+                                                  .text,
+                                          abilityToHandleMedicalNeeds: true,
+                                          hasFencedYard: false,
+                                          agreementToTerms: agreementToTerms,
+                                        ),
+                                      );
+                                }
+                              },
+                              child: Text('Submit Form'),
+                            ),
                           ),
                   ],
                 ),

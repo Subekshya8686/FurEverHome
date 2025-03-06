@@ -204,44 +204,49 @@ class _AdoptionFormPageState extends State<AdoptionFormPage> {
                           ? Center(
                               child:
                                   CircularProgressIndicator()) // Show loading indicator
-                          : ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  // Fetch the user ID from SharedPreferences
-                                  context.read<AdoptionBloc>().add(
-                                        CreateAdoptionEvent(
-                                          applicantName:
-                                              _applicantNameController.text,
-                                          applicantEmail:
-                                              _applicantEmailController.text,
-                                          applicantPhone:
-                                              _applicantPhoneController.text,
-                                          districtOrCity:
-                                              _districtOrCityController.text,
-                                          homeAddress:
-                                              _homeAddressController.text,
-                                          householdMembers: int.parse(
-                                              _householdMembersController.text),
-                                          petDetails:
-                                              _petDetailsController.text,
-                                          residenceType:
-                                              _residenceTypeController.text,
-                                          reasonForAdoption:
-                                              _reasonForAdoptionController.text,
-                                          experienceWithPets:
-                                              _experienceWithPetsController
-                                                  .text,
-                                          petId: widget.pet.id,
-                                          hasPets: hasPets,
-                                          agreementToTerms: agreementToTerms,
-                                          applicantId:
-                                              '', // Use the userId here if available
-                                        ),
-                                      );
-                                }
-                              },
-                              child: Text('Submit Form'),
+                          : SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState?.validate() ??
+                                      false) {
+                                    // Fetch the user ID from SharedPreferences
+                                    context.read<AdoptionBloc>().add(
+                                          CreateAdoptionEvent(
+                                            applicantName:
+                                                _applicantNameController.text,
+                                            applicantEmail:
+                                                _applicantEmailController.text,
+                                            applicantPhone:
+                                                _applicantPhoneController.text,
+                                            districtOrCity:
+                                                _districtOrCityController.text,
+                                            homeAddress:
+                                                _homeAddressController.text,
+                                            householdMembers: int.parse(
+                                                _householdMembersController
+                                                    .text),
+                                            petDetails:
+                                                _petDetailsController.text,
+                                            residenceType:
+                                                _residenceTypeController.text,
+                                            reasonForAdoption:
+                                                _reasonForAdoptionController
+                                                    .text,
+                                            experienceWithPets:
+                                                _experienceWithPetsController
+                                                    .text,
+                                            petId: widget.pet.id,
+                                            hasPets: hasPets,
+                                            agreementToTerms: agreementToTerms,
+                                            applicantId:
+                                                '', // Use the userId here if available
+                                          ),
+                                        );
+                                  }
+                                },
+                                child: Text('Submit Form'),
+                              ),
                             ),
                     )
                   ],
