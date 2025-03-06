@@ -6,87 +6,91 @@ import 'package:furever_home/features/dashboard/domain/use_case/get_all_pets_use
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-// Create a mock class for the IPetRepository
+// Mocking the repository
 class MockPetRepository extends Mock implements IPetRepository {}
 
 void main() {
-  late GetAllPetsUseCase useCase;
-  late MockPetRepository mockRepository;
+  late GetAllPetsUseCase getAllPetsUseCase;
+  late MockPetRepository mockPetRepository;
+
+  // Test data
+  final tPetList = [
+    PetEntity(
+      id: '1',
+      name: 'Buddy',
+      description: 'Friendly dog',
+      type: 'Dog',
+      breed: 'Golden Retriever',
+      age: 3,
+      weight: 25.0,
+      vaccinated: true,
+      specialNeeds: false,
+      healthDetails: 'No health issues',
+      height: 50.0,
+      furType: 'Short',
+      color: 'Golden',
+      eyeColor: 'Brown',
+      dateOfBirth: DateTime(2020, 1, 1),
+      dateAdded: DateTime(2023, 1, 1),
+      adoptionStatus: 'Available',
+      bookmarkedBy: ['user1', 'user2'],
+      photo: 'https://example.com/photo.jpg',
+    ),
+    PetEntity(
+      id: '2',
+      name: 'Max',
+      description: 'Loyal dog',
+      type: 'Dog',
+      breed: 'Labrador',
+      age: 4,
+      weight: 30.0,
+      vaccinated: true,
+      specialNeeds: true,
+      healthDetails: 'Needs medication for arthritis',
+      height: 55.0,
+      furType: 'Short',
+      color: 'Black',
+      eyeColor: 'Green',
+      dateOfBirth: DateTime(2019, 5, 15),
+      dateAdded: DateTime(2023, 2, 15),
+      adoptionStatus: 'Adopted',
+      bookmarkedBy: ['user3'],
+      photo: 'https://example.com/photo2.jpg',
+    ),
+  ];
 
   setUp(() {
-    mockRepository = MockPetRepository();
-    useCase = GetAllPetsUseCase(repository: mockRepository);
-
-    // Register fallback values for the mocks to handle unknown methods
-    registerFallbackValue(ApiFailure(message: 'Unknown error'));
+    mockPetRepository = MockPetRepository();
+    getAllPetsUseCase = GetAllPetsUseCase(repository: mockPetRepository);
   });
 
   group('GetAllPetsUseCase', () {
-    test('should return a list of PetEntity on success', () async {
+    test('should return list of pets when the repository call is successful',
+        () async {
       // Arrange
-      final pets = [
-        PetEntity(
-          id: '1',
-          name: 'Buddy',
-          type: 'Dog',
-          breed: 'Labrador',
-          age: 5,
-          weight: 20.5,
-          vaccinated: true,
-          specialNeeds: false,
-          healthDetails: 'Healthy',
-          height: 60.0,
-          furType: 'Short',
-          color: 'Brown',
-          eyeColor: 'Brown',
-          dateOfBirth: DateTime(2018, 5, 10),
-          dateAdded: DateTime(2023, 2, 7),
-          photo: null,
-        ),
-        PetEntity(
-          id: '2',
-          name: 'Max',
-          type: 'Cat',
-          breed: 'Siamese',
-          age: 3,
-          weight: 10.2,
-          vaccinated: true,
-          specialNeeds: false,
-          healthDetails: 'Healthy',
-          height: 45.0,
-          furType: 'Short',
-          color: 'Gray',
-          eyeColor: 'Green',
-          dateOfBirth: DateTime(2020, 7, 2),
-          dateAdded: DateTime(2023, 2, 7),
-          photo: null,
-        ),
-      ];
-
-      // Mock the repository response
-      when(() => mockRepository.getAllPets())
-          .thenAnswer((_) async => Right(pets));
+      when(() => mockPetRepository.getAllPets())
+          .thenAnswer((_) async => Right(tPetList));
 
       // Act
-      final result = await useCase();
+      final result = await getAllPetsUseCase();
 
       // Assert
-      expect(result, Right(pets));
-      verify(() => mockRepository.getAllPets()).called(1);
+      expect(result, Right(tPetList));
+      verify(() => mockPetRepository.getAllPets()).called(1);
     });
 
-    test('should return a Failure on repository error', () async {
+    test('should return failure when the repository call fails', () async {
       // Arrange
       final failure = ApiFailure(message: 'Failed to fetch pets');
-      when(() => mockRepository.getAllPets())
+      when(() => mockPetRepository.getAllPets())
           .thenAnswer((_) async => Left(failure));
 
       // Act
-      final result = await useCase();
+      final result = await getAllPetsUseCase();
 
       // Assert
       expect(result, Left(failure));
-      verify(() => mockRepository.getAllPets()).called(1);
+      verify(() => mockPetRepository.getAllPets()).called(1);
     });
   });
 }

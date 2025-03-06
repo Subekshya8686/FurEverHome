@@ -19,58 +19,67 @@ class PetModelAdapter extends TypeAdapter<PetModel> {
     return PetModel(
       id: fields[0] as String,
       name: fields[1] as String,
-      type: fields[2] as String,
-      breed: fields[3] as String,
-      age: fields[4] as int,
-      weight: fields[5] as double,
-      vaccinated: fields[6] as bool,
-      specialNeeds: fields[7] as bool,
-      healthDetails: fields[8] as String,
-      height: fields[9] as double,
-      furType: fields[10] as String,
-      color: fields[11] as String,
-      eyeColor: fields[12] as String,
-      dateOfBirth: fields[13] as DateTime,
-      dateAdded: fields[14] as DateTime,
-      photo: fields[15] as String?,
+      description: fields[2] as String,
+      type: fields[3] as String,
+      breed: fields[4] as String,
+      age: fields[5] as int,
+      weight: fields[6] as double,
+      vaccinated: fields[7] as bool,
+      specialNeeds: fields[8] as bool,
+      healthDetails: fields[9] as String?,
+      height: fields[10] as double?,
+      furType: fields[11] as String?,
+      color: fields[12] as String?,
+      eyeColor: fields[13] as String?,
+      dateOfBirth: fields[14] as DateTime?,
+      dateAdded: fields[15] as DateTime?,
+      adoptionStatus: fields[16] as String?,
+      bookmarkedBy: (fields[17] as List?)?.cast<String>(),
+      photo: fields[18] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PetModel obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.type)
+      ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.breed)
+      ..write(obj.type)
       ..writeByte(4)
-      ..write(obj.age)
+      ..write(obj.breed)
       ..writeByte(5)
-      ..write(obj.weight)
+      ..write(obj.age)
       ..writeByte(6)
-      ..write(obj.vaccinated)
+      ..write(obj.weight)
       ..writeByte(7)
-      ..write(obj.specialNeeds)
+      ..write(obj.vaccinated)
       ..writeByte(8)
-      ..write(obj.healthDetails)
+      ..write(obj.specialNeeds)
       ..writeByte(9)
-      ..write(obj.height)
+      ..write(obj.healthDetails)
       ..writeByte(10)
-      ..write(obj.furType)
+      ..write(obj.height)
       ..writeByte(11)
-      ..write(obj.color)
+      ..write(obj.furType)
       ..writeByte(12)
-      ..write(obj.eyeColor)
+      ..write(obj.color)
       ..writeByte(13)
-      ..write(obj.dateOfBirth)
+      ..write(obj.eyeColor)
       ..writeByte(14)
-      ..write(obj.dateAdded)
+      ..write(obj.dateOfBirth)
       ..writeByte(15)
+      ..write(obj.dateAdded)
+      ..writeByte(16)
+      ..write(obj.adoptionStatus)
+      ..writeByte(17)
+      ..write(obj.bookmarkedBy)
+      ..writeByte(18)
       ..write(obj.photo);
   }
 

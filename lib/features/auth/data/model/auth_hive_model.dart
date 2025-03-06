@@ -12,9 +12,9 @@ class AuthHiveModel extends Equatable {
   @HiveField(0)
   final String? studentId;
   @HiveField(1)
-  final String fname;
+  final String? fname;
   @HiveField(2)
-  final String lname;
+  final String? lname;
   @HiveField(3)
   final String? image;
 
@@ -23,19 +23,17 @@ class AuthHiveModel extends Equatable {
   // @HiveField(4)
   // final String? email;
   @HiveField(4)
-  final String email;
+  final String? email;
   @HiveField(5)
-  final String password;
+  final String? password;
 
   AuthHiveModel({
     String? studentId,
-    required this.fname,
-    required this.lname,
+    this.fname,
+    this.lname,
     this.image,
-    // required this.dateOfBirth,
-    // this.email,
-    required this.email,
-    required this.password,
+    this.email,
+    this.password,
   }) : studentId = studentId ?? Uuid().v4();
 
   const AuthHiveModel.initial()

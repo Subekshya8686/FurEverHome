@@ -26,6 +26,19 @@ class AuthRemoteRepository implements IAuthRepository {
   }
 
   @override
+  Future<Either<Failure, void>> updateStudentById(
+      String userId, AuthEntity auth) async {
+    try {
+      await _authRemoteDatasource.updateStudentById(
+          userId, auth); // Calls the data source method
+      return Right(null); // Success (void indicates no return data)
+    } catch (e) {
+      return Left(ApiFailure(
+          message: e.toString())); // If an error occurs, return a failure
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> deleteStudent(String d) {
     // TODO: implement deleteStudent
     throw UnimplementedError();
@@ -41,6 +54,20 @@ class AuthRemoteRepository implements IAuthRepository {
   Future<Either<Failure, AuthEntity>> getCurrentUser() {
     // TODO: implement getCurrentUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserById(String userId) async {
+    try {
+      // Fetch user data from the remote data source
+      final result = await _authRemoteDatasource.getUserById(userId);
+      print("result repo $result");
+
+      return result; // Return the result (Either<Failure, AuthEntity>)
+    } catch (e) {
+      // If an error occurs, return a Failure
+      return Left(ApiFailure(message: e.toString()));
+    }
   }
 
   @override

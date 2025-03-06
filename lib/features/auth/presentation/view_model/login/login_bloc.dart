@@ -32,10 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                     BlocProvider.value(value: _registerBloc),
                   ],
                   child: event.destination,
-                )
-            // builder: (context) => BlocProvider.value(
-            //     value: _registerBloc, child: event.destination),
-            ),
+                )),
       );
     });
 

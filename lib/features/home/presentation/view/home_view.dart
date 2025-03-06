@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             // Add some spacing between the image and text
-            const Text('Home'),
+            // const Text('Home'),
           ],
         ),
         // foregroundColor: Color(0xCC96614D),
@@ -63,9 +63,17 @@ class HomeView extends StatelessWidget {
         builder: (context, state) {
           return BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.dashboard),
+              //   label: 'Dashboard',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard),
-                label: 'Dashboard',
+                label: 'Pets',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),
